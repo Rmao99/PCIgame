@@ -21,6 +21,8 @@ import GameKit
 
 class EndScene : SKScene //super class is SKScene
 {
+    var muted = Bool()
+    
     var restartBtn : UIButton! //instantiates this var as an absolute UI button
     var ScoreLbl : UILabel!
     var GameOverLbl : UILabel!
@@ -28,6 +30,8 @@ class EndScene : SKScene //super class is SKScene
     var GameOverLbl2 : UILabel!
     var mainMenuBtn : UIButton!
     var linkBtn : UIButton!
+    var muteBtn : UIButton!
+    var unmuteBtn : UIButton!
     
     var didRestart = false;
     var didMainRestart = false;
@@ -67,7 +71,35 @@ class EndScene : SKScene //super class is SKScene
                 }
                 
         })
-
+        
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        muted = mutedDefault.valueForKey("Mute") as! Bool
+        
+        unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        unmuteBtn.frame = CGRectMake(50,50,50,50)
+        unmuteBtn.setImage(UIImage(named: "unmute") as UIImage?, forState: .Normal)
+        unmuteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        unmuteBtn.layer.borderWidth = 1
+        unmuteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        unmuteBtn.addTarget(self, action: Selector("unmuteClick"), forControlEvents: UIControlEvents.TouchDown)
+        if(muted == false)
+        {
+            self.view?.addSubview(unmuteBtn);
+        }
+        
+        muteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        muteBtn.frame = CGRectMake(50,50,50,50)
+        muteBtn.setImage(UIImage(named: "mute") as UIImage?, forState: .Normal)
+        muteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        muteBtn.layer.borderWidth = 1
+        muteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        muteBtn.addTarget(self, action: Selector("muteClick"), forControlEvents: UIControlEvents.TouchDown)
+        if(muted == true)
+        {
+            self.view?.addSubview(muteBtn);
+        }
         
         scene?.backgroundColor = UIColor.cyanColor()
         
@@ -141,10 +173,6 @@ class EndScene : SKScene //super class is SKScene
         HighScoreLbl.font = UIFont(name: "Chalkduster", size: 20)
         HighScoreLbl.textColor = UIColor.blackColor()
         HighScoreLbl.center = CGPoint(x: view.frame.size.width / 2+50, y: view.frame.size.width / 4 + 70)
-        
-        
-        
-        
         HighScoreLbl.text = "HighScore: \(highScore)"
         self.view?.addSubview(HighScoreLbl)
         
@@ -249,4 +277,6 @@ class EndScene : SKScene //super class is SKScene
             didMainRestart = true;
         }
     }
+    
+    
 }

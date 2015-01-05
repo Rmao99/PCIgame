@@ -20,7 +20,9 @@ struct PhysicsCategory{
 class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     var highScore = Int()
-    var player = SKSpriteNode(imageNamed: "walk 4 water (3).png")
+    var muted = Bool()
+    
+    var player = SKSpriteNode(imageNamed: "walk 4 water (3)")
     var score = 0
     var scoreLabel = UILabel()
     
@@ -37,7 +39,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     var isGolden = false
     // var DropTimer = NSTimer()
-    var muted = false
     
     var dropArray = [SKSpriteNode]()
     
@@ -86,13 +87,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView)
     {
-        
+        physicsWorld.contactDelegate = self //CRUCIAL
         self.addChild(gameLayer)
         scoreLabel.text = "\(score)"
         
         let viewSize:CGSize = view.bounds.size
         
-        let BackGround = SKSpriteNode(imageNamed: "cartoonsky1.png")
+        let BackGround = SKSpriteNode(imageNamed: "BG2")
         BackGround.position = CGPoint(x: viewSize.width/2+50, y: viewSize.height/2)
         BackGround.zPosition = 0
         
@@ -101,23 +102,53 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(BackGround)
         
+        var highScoreDefault = NSUserDefaults.standardUserDefaults()
+        
+        if(highScoreDefault.valueForKey("HighScore") == nil)
+        {
+            highScore = 0;
+        }
+        else
+        {
+            highScore = highScoreDefault.valueForKey("HighScore") as! NSInteger
+        }
+        
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        
+        if(mutedDefault.valueForKey("Mute") == nil)
+        {
+            muted = false
+        }
+        else
+        {
+            muted = mutedDefault.valueForKey("Mute") as! Bool
+        }
+        
         unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
         unmuteBtn.frame = CGRectMake(50,50,50,50)
-        unmuteBtn.setImage(UIImage(named: "unmute.png") as UIImage?, forState: .Normal)
+        unmuteBtn.setImage(UIImage(named: "unmute") as UIImage?, forState: .Normal)
         unmuteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
         unmuteBtn.layer.borderWidth = 1
         unmuteBtn.layer.borderColor = UIColor.blackColor().CGColor
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         unmuteBtn.addTarget(self, action: Selector("unmuteClick"), forControlEvents: UIControlEvents.TouchDown)
-        self.view?.addSubview(unmuteBtn);
+        if(muted == false)
+        {
+            self.view?.addSubview(unmuteBtn);
+        }
+        
         muteBtn = UIButton(type: UIButtonType.Custom) as UIButton
         muteBtn.frame = CGRectMake(50,50,50,50)
-        muteBtn.setImage(UIImage(named: "mute.png") as UIImage?, forState: .Normal)
+        muteBtn.setImage(UIImage(named: "mute") as UIImage?, forState: .Normal)
         muteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
         muteBtn.layer.borderWidth = 1
         muteBtn.layer.borderColor = UIColor.blackColor().CGColor
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         muteBtn.addTarget(self, action: Selector("muteClick"), forControlEvents: UIControlEvents.TouchDown)
+        if(muted == true)
+        {
+            self.view?.addSubview(muteBtn);
+        }
         
         numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 4, height: 30))
         numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
@@ -148,34 +179,35 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
 
         let backgroundSound = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
         soundPlayer = backgroundSound
-        soundPlayer.volume = 0.3
+        if(muted == false)
+        {
+            soundPlayer.volume = 0.3
+        }
+        else
+        {
+            soundPlayer.volume = 0
+        }
         soundPlayer.numberOfLoops = -1
-        soundPlayer.play();
+        soundPlayer.play()
         
         let backgroundMusic = self.setupAudioPlayerWithFile("Ducky Duck", type: "mp3")
         backgroundPlayer = backgroundMusic
-        backgroundPlayer.volume = 0.3
+        if(muted == false)
+        {
+            backgroundPlayer.volume = 0.3
+        }
+        else
+        {
+            backgroundPlayer.volume = 0
+        }
         backgroundPlayer.numberOfLoops = -1
         backgroundPlayer.play()
+
         
         let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
         splash = splashSound;
-        
-        var highScoreDefault = NSUserDefaults.standardUserDefaults()
-        
-        if(highScoreDefault.valueForKey("HighScore") == nil){
-            highScore = 0;
-        }
-        else{
-            highScore = highScoreDefault.valueForKey("HighScore") as! NSInteger
-        }
-        
-        physicsWorld.contactDelegate = self //CRUCIAL
-        
-        //pauseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        
-        
-        createPauseBtn()
+    
+               createPauseBtn()
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
         //TODO: WHAT DO I DOOOOOO
@@ -215,7 +247,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         waitEnlarge = SKAction.waitForDuration((Double(arc4random_uniform(6) + 18)))
         spawnEnlarge = SKAction.runBlock
         {
-            let enlarge = SKSpriteNode(imageNamed: "enlarge.png")
+            let enlarge = SKSpriteNode(imageNamed: "enlarge")
             enlarge.xScale = 0.2
             enlarge.yScale = 0.2
             let minValue = self.size.width/8
@@ -595,7 +627,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
    
     func unmuteClick()
     {
-        muted = true
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(true, forKey: "Mute")
+        muted = true;
         soundPlayer.volume = 0;
         backgroundPlayer.volume = 0
         unmuteBtn.removeFromSuperview()
@@ -604,6 +638,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func muteClick()
     {
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(false, forKey: "Mute")
         muted = false
         soundPlayer.volume = 0.3
         backgroundPlayer.volume = 0.3
