@@ -275,6 +275,7 @@ class EndScene : SKScene //super class is SKScene
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
             didMainRestart = true;
+            //
         }
     }
     
