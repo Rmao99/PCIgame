@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE4B4A491C272E7800DED1F8 /* PERSON1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4B4A471C272E7800DED1F8 /* PERSON1.png */; };
+		FE4B4A4A1C272E7800DED1F8 /* wuterdrip.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4B4A481C272E7800DED1F8 /* wuterdrip.png */; };
 		FE96ABEF1C14D4C400257581 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
 		FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96ABF01C14D4C400257581 /* GameScene.sks */; };
 		FE96ABF31C14D4C400257581 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABF21C14D4C400257581 /* GameScene.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE4B4A471C272E7800DED1F8 /* PERSON1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PERSON1.png; path = ../../PERSON1.png; sourceTree = "<group>"; };
+		FE4B4A481C272E7800DED1F8 /* wuterdrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wuterdrip.png; path = ../../wuterdrip.png; sourceTree = "<group>"; };
 		FE96ABEB1C14D4C400257581 /* Catch the Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE96ABEE1C14D4C400257581 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE96ABF01C14D4C400257581 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 				FE96ABF91C14D4C400257581 /* Assets.xcassets */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
 				FE96ABFE1C14D4C500257581 /* Info.plist */,
+				FE4B4A471C272E7800DED1F8 /* PERSON1.png */,
+				FE4B4A481C272E7800DED1F8 /* wuterdrip.png */,
 			);
 			path = "Catch the Drop";
 			sourceTree = "<group>";
@@ -235,7 +241,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE4B4A4A1C272E7800DED1F8 /* wuterdrip.png in Resources */,
 				FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */,
+				FE4B4A491C272E7800DED1F8 /* PERSON1.png in Resources */,
 				FE96ABFD1C14D4C400257581 /* LaunchScreen.storyboard in Resources */,
 				FE96ABFA1C14D4C400257581 /* Assets.xcassets in Resources */,
 				FE96ABF81C14D4C400257581 /* Main.storyboard in Resources */,
@@ -492,6 +500,7 @@
 				FE96AC191C14D4C500257581 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FE96AC1A1C14D4C500257581 /* Build configuration list for PBXNativeTarget "Catch the DropTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +509,7 @@
 				FE96AC1C1C14D4C500257581 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FE96AC1D1C14D4C500257581 /* Build configuration list for PBXNativeTarget "Catch the DropUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +518,7 @@
 				FE96AC1F1C14D4C500257581 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

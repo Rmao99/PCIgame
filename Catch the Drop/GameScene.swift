@@ -9,14 +9,23 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var player = SKSpriteNode(imageNamed: "person1.png")
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 45;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
-        self.addChild(myLabel)
+        player.position = CGPointMake(self.size.width/2, self.size.height/5)
+        self.addChild(player)
+        }
+    
+    func SpawnDrop(){
+        
+        var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+        drop.zPosition = -5
+        drop.position = CGPointMake(player.position.x, player.position.y)
+        self.addChild(drop)
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -25,17 +34,16 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            player.position.x = location.x;
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch in touches {
+            let location = touch.locationInNode(self)
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            player.position.x = location.x;
+
         }
     }
    
