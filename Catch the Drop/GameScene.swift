@@ -11,15 +11,22 @@ import SpriteKit
 class GameScene: SKScene {
     
     var player = SKSpriteNode(imageNamed: "person1.png")
+  
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
         player.position = CGPointMake(self.size.width/2, self.size.height/5)
+        //selector: what function it calls every second
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+        
+        
         self.addChild(player)
+        
+        
         }
     
-    func SpawnDrop(){
+    func spawnDrop(){
         
         var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
         drop.zPosition = -5
