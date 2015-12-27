@@ -37,6 +37,11 @@ class GameScene: SKScene {
     
     func spawnEnemies(){
         var enemy = SKSpriteNode(imageNamed: "wuterdrip.png")
+        var minValue = self.size.width/8
+        var maxValue = self.size.width - 20
+        
+        var spawnPoint = UInt32(maxValue - minValue)
+        enemy.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
