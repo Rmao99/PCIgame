@@ -20,9 +20,7 @@ class GameScene: SKScene {
         //selector: what function it calls every second
         var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         
-        
         self.addChild(player)
-        
         
         }
     
@@ -31,8 +29,14 @@ class GameScene: SKScene {
         var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
         drop.zPosition = -5
         drop.position = CGPointMake(player.position.x, player.position.y)
+        let action = SKAction.moveToY(self.size.height + 30, duration: 1.0)
+        drop.runAction(SKAction.repeatActionForever(action))
         self.addChild(drop)
         
+    }
+    
+    func spawnEnemies(){
+        var enemy = SKSpriteNode(imageNamed: "wuterdrip.png")
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
