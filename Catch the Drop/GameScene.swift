@@ -20,6 +20,7 @@ class GameScene: SKScene {
         //selector: what function it calls every second
         var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         
+        var EnemyTime = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnEnemies"), userInfo: nil, repeats: true)
         self.addChild(player)
         
         }
@@ -42,6 +43,10 @@ class GameScene: SKScene {
         
         var spawnPoint = UInt32(maxValue - minValue)
         enemy.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+        
+        let action = SKAction.moveToY(-30, duration: 3.0)
+        enemy.runAction(SKAction.repeatActionForever(action))
+        self.addChild(enemy)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
