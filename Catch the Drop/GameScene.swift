@@ -2,7 +2,7 @@
 //  GameScene.swift
 //  Catch the Drop
 //
-//  Created by Siddhi on 12/6/15.
+//  Created by Richard and Smayra on 12/6/15.
 //  Copyright (c) 2015 Project Concern International. All rights reserved.
 //
 
