@@ -59,17 +59,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            (firstBody.contactTestBitMask == PhysicsCategory.player) &&
            (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-            collideWithPlayer(firstBody.node as SKSpriteNode, secondBody.node as SKSpriteNode)
+            collideWithPlayer(firstBody.node as! SKSpriteNode, player: secondBody.node as! SKSpriteNode )
         }
     }
     
     func collideWithPlayer(drop: SKSpriteNode, player: SKSpriteNode)
     {
+        //drop.removeFromParent()
+       
         score++
         
         scoreLabel.text = "\(score)"
         //can add sounds when collide
     }
+    
     
     /*func spawnDrop(){
         
