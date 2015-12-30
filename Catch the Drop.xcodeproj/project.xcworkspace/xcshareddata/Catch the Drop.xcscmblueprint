@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "60DCA53F5240137EB6E551CD33DF348DAB8CCCC2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "60DCA53F5240137EB6E551CD33DF348DAB8CCCC2" : 0,
+    "0E6DE4E2E693467BBC9CE91B983CCE6CC17257DD" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "89E4E1D6-0CA7-493E-83E2-15F9CA3EE348",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "60DCA53F5240137EB6E551CD33DF348DAB8CCCC2" : "PCIgame\/",
+    "0E6DE4E2E693467BBC9CE91B983CCE6CC17257DD" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Catch the Drop",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Catch the Drop.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/calliem\/SmashELO.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0E6DE4E2E693467BBC9CE91B983CCE6CC17257DD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Rmao99\/PCIgame.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "60DCA53F5240137EB6E551CD33DF348DAB8CCCC2"
+    }
+  ]
+}
