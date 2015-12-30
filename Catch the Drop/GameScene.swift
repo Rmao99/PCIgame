@@ -17,7 +17,9 @@ struct PhysicsCategory{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "person1.png")
-  
+    var score = Int()
+    var scoreLabel = UILabel()
+        
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -38,18 +40,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
         
+        scoreLabel.text = "\(score)"
+        scoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100,height: 20))
+        scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.3)
+        scoreLabel.textColor = UIColor.whiteColor()
+        
+        self.view?.addSubview(scoreLabel)
+        
+        
         }
     
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody : SKPhysicsBody = contact.bodyA   //contact is passed from parameter and
         var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
         
-        if((firstBody.contactTestBitMask == PhysicsCategory.drop) && (secondBody.contactTestBitMask ==
-                                                                    PhysicsCategory.player))
+        if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
+           (secondBody.contactTestBitMask == PhysicsCategory.player) ||
+           (firstBody.contactTestBitMask == PhysicsCategory.player) &&
+           (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-            //increment counter
+            collideWithPlayer(firstBody.node as SKSpriteNode, secondBody.node as SKSpriteNode)
         }
+    }
+    
+    func collideWithPlayer(drop: SKSpriteNode, player: SKSpriteNode)
+    {
+        score++
         
+        scoreLabel.text = "\(score)"
+        //can add sounds when collide
     }
     
     /*func spawnDrop(){
@@ -89,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.locationInNode(self)
             
-            player.position.x = location.x;
+            player.position.x = location.x
         }
     }
     
