@@ -23,6 +23,8 @@ class GameScene: SKScene {
         /* Setup your scene here */
         
         player.position = CGPointMake(self.size.width/2, self.size.height/5)
+        
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: player.size)
         //selector: what function it calls every second
         var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         
