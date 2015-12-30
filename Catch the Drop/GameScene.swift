@@ -8,6 +8,12 @@
 
 import SpriteKit
 
+struct PhysicsCategory{
+    static let enemy : UInt32 = 1 //000...(32)1
+    static let bullet : UInt32 = 2
+    static let player : UInt32 = 3
+}
+
 class GameScene: SKScene {
     
     var player = SKSpriteNode(imageNamed: "person1.png")
@@ -44,7 +50,7 @@ class GameScene: SKScene {
         var spawnPoint = UInt32(maxValue - minValue)
         enemy.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
         
-        let action = SKAction.moveToY(-30, duration: 3.0)
+        let action = SKAction.moveToY(-70, duration: 3.0)
         enemy.runAction(SKAction.repeatActionForever(action))
         self.addChild(enemy)
     }
