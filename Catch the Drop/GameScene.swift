@@ -19,8 +19,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode(imageNamed: "person1.png")
     var score = 0
     var scoreLabel = UILabel()
-    var lives = 3
-    var livesLabel = UILabel()
+    //var lives = 3
+    //var livesLabel = UILabel()
         
     
     override func didMoveToView(view: SKView) {
@@ -54,13 +54,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 0.3)
         scoreLabel.textColor = UIColor.whiteColor()
         
-        livesLabel.text = "\(lives)"
-        livesLabel = UILabel(frame: CGRect(x: 100, y: 0, width: 100, height: 20))
-        livesLabel.backgroundColor = UIColor(red: 0.6, green: 0.1, blue: 0.1, alpha: 0.3)
-        livesLabel.textColor = UIColor.whiteColor()
+    //    livesLabel.text = "\(lives)"
+    //   livesLabel = UILabel(frame: CGRect(x: 100, y: 0, width: 100, height: 20))
+    //    livesLabel.backgroundColor = UIColor(red: 0.6, green: 0.1, blue: 0.1, alpha: 0.3)
+    //    livesLabel.textColor = UIColor.whiteColor()
         
         self.view?.addSubview(scoreLabel)
-        self.view?.addSubview(livesLabel)
+    //    self.view?.addSubview(livesLabel)
         
         }
     
@@ -89,15 +89,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lives++;
             
             livesLabel.text = "\(lives)"
-        }
-        else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
+        }*/
+        if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
         {
             secondBody.node?.removeFromParent()
+            firstBody.node?.removeFromParent()
+            self.view?.presentScene(SKScene(fileNamed: "EndScene"))
             
-            lives++;
+            scoreLabel.removeFromSuperview()
             
-            livesLabel.text = "\(lives)"
-        }*/
+       //     lives++;
+            
+       //     livesLabel.text = "\(lives)"
+        }
     
     }
     //func collideWithBottom(drop: SKSpriteNode, bottom: CGRect)
