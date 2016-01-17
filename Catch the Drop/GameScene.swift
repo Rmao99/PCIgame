@@ -10,15 +10,17 @@ import SpriteKit
 
 struct PhysicsCategory{
     static let drop : UInt32 = 1 //000...(32)1
-    //static let bullet : UInt32 = 2
+    static let bottom : UInt32 = 2
     static let player : UInt32 = 3
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "person1.png")
-    var score = Int()
+    var score = 0
     var scoreLabel = UILabel()
+    var lives = 3
+    var livesLabel = UILabel()
         
     
     override func didMoveToView(view: SKView) {
@@ -34,19 +36,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.contactTestBitMask = PhysicsCategory.drop //triggers didBeginContact
         player.physicsBody?.dynamic = false
         
+        let bottomRect = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 1)
+        let bottom = SKNode()
+        bottom.physicsBody = SKPhysicsBody(edgeLoopFromRect: bottomRect)
+        bottom.physicsBody!.categoryBitMask = PhysicsCategory.bottom
+        self.addChild(bottom)
+        
         //selector: what function it calls every second
         /*var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)*/
         
         var DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
         
+        
         scoreLabel.text = "\(score)"
         scoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100,height: 20))
-        scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.3)
+        scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 0.3)
         scoreLabel.textColor = UIColor.whiteColor()
         
-        self.view?.addSubview(scoreLabel)
+        livesLabel.text = "\(lives)"
+        livesLabel = UILabel(frame: CGRect(x: 100, y: 0, width: 100, height: 20))
+        livesLabel.backgroundColor = UIColor(red: 0.6, green: 0.1, blue: 0.1, alpha: 0.3)
+        livesLabel.textColor = UIColor.whiteColor()
         
+        self.view?.addSubview(scoreLabel)
+        self.view?.addSubview(livesLabel)
         
         }
     
@@ -55,22 +69,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
         
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
-           (secondBody.contactTestBitMask == PhysicsCategory.player) ||
-           (firstBody.contactTestBitMask == PhysicsCategory.player) &&
+           (secondBody.contactTestBitMask == PhysicsCategory.player))
+        {
+            collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
+            
+        }
+        else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
            (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-            collideWithPlayer(firstBody.node as! SKSpriteNode, player: secondBody.node as! SKSpriteNode )
+            collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)
+            
+                //firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
         }
-    }
+        
+        /*if (firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
+        {
+            firstBody.node?.removeFromParent()
+            //TODO: Replace the log statement with display of Game Over Scene
+            lives++;
+            
+            livesLabel.text = "\(lives)"
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
+        {
+            secondBody.node?.removeFromParent()
+            
+            lives++;
+            
+            livesLabel.text = "\(lives)"
+        }*/
     
-    func collideWithPlayer(drop: SKSpriteNode, player: SKSpriteNode)
+    }
+    //func collideWithBottom(drop: SKSpriteNode, bottom: CGRect)
+    //{
+    //    drop.removeFromParent()
+    //}
+    
+    func collideWithPlayer(drop: SKSpriteNode, person: SKSpriteNode)
     {
+        person.removeFromParent()
         //drop.removeFromParent()
-       
+        
         score++
         
         scoreLabel.text = "\(score)"
         //can add sounds when collide
+    }
+    
+    func collideWithDrop(person: SKSpriteNode, drop: SKSpriteNode)
+    {
+        drop.removeFromParent()
+        //person.removeFromParent()
+        
+        score++
+        
+        scoreLabel.text =  "\(score)"
     }
     
     
@@ -95,7 +148,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
         drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
         drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
-        drop.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+        //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+        //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
         drop.physicsBody?.affectedByGravity = false
         drop.physicsBody?.dynamic = true
         
