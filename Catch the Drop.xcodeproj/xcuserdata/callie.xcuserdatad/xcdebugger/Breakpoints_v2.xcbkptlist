@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Catch the Drop/GameScene.swift"
-            timestampString = "474763440.417995"
+            timestampString = "474765299.621814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "collideWithPlayer(_:person:)"
             landmarkType = "5">
          </BreakpointContent>
