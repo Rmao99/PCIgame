@@ -16,6 +16,7 @@ struct PhysicsCategory{
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var highScore = Int()
     var player = SKSpriteNode(imageNamed: "person1.png")
     var score = 0
     var scoreLabel = UILabel()
@@ -26,6 +27,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
+ /*       var highscoreDefault = NSUserDefaults.standardUserDefaults()
+        if (highscoreDefault.valueForKey("HighScore") != nil) //something inside of it
+        {
+            highScore = highscoreDefault.valueForKey("Highscore") as! NSInteger
+        }
+        else
+        {
+            highScore = 0
+        }
+   */
         physicsWorld.contactDelegate = self //CRUCIAL
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
@@ -100,6 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             updateScore();
             
+        
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
             
@@ -119,14 +131,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var scoreDefault = NSUserDefaults.standardUserDefaults()
         scoreDefault.setValue(score, forKey: "Score") //grab this score from NSUerDefaults to update and check high scores. The key("Score) will be used to get the value of scoreDefault
         scoreDefault.synchronize()
+        
+      /*  if(score > highScore)
+        {
+            var highscoreDefault = NSUserDefaults.standardUserDefaults()
+            highscoreDefault.setValue(score, forKey: "HighScore")
+        }*/
     }
     func collideWithPlayer(drop: SKSpriteNode, person: SKSpriteNode)
     {
+        NSLog("COLLLIDE")
         person.removeFromParent()
         //drop.removeFromParent()
         
         score++
-        
         scoreLabel.text = "\(score)"
       
         //can add sounds when collide
@@ -134,6 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collideWithDrop(person: SKSpriteNode, drop: SKSpriteNode)
     {
+        NSLog("SAME")
         drop.removeFromParent()
         //person.removeFromParent()
         
