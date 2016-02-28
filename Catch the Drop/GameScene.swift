@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
-            self.view?.presentScene(SKScene(fileNamed: "EndScene"))
+            
             
             scoreLabel.removeFromSuperview()
             
@@ -117,6 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score++
         
         scoreLabel.text = "\(score)"
+        self.view?.presentScene(EndScene())
         //can add sounds when collide
     }
     
@@ -128,6 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score++
         
         scoreLabel.text =  "\(score)"
+        self.view?.presentScene(EndScene())
     }
     
     
