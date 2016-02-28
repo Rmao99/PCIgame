@@ -28,8 +28,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self //CRUCIAL
         
-        player.position = CGPointMake(self.size.width/2, self.size.height/5)
+        self.scene?.backgroundColor = UIColor.darkGrayColor()
         
+        self.scene?.size = CGSize(width: 640, height: 1136)
+        
+        self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
+        
+        player.position = CGPointMake(self.size.width/2, self.size.height/5)
         player.physicsBody = SKPhysicsBody(rectangleOfSize: player.size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
@@ -92,9 +97,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }*/
         if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
         {
+            
+            updateScore();
+            
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
             
+            self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
             
@@ -104,11 +113,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     
     }
-    //func collideWithBottom(drop: SKSpriteNode, bottom: CGRect)
-    //{
-    //    drop.removeFromParent()
-    //}
     
+    func updateScore()
+    {
+        var scoreDefault = NSUserDefaults.standardUserDefaults()
+        scoreDefault.setValue(score, forKey: "Score") //grab this score from NSUerDefaults to update and check high scores. The key("Score) will be used to get the value of scoreDefault
+        scoreDefault.synchronize()
+    }
     func collideWithPlayer(drop: SKSpriteNode, person: SKSpriteNode)
     {
         person.removeFromParent()
@@ -117,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score++
         
         scoreLabel.text = "\(score)"
-        self.view?.presentScene(EndScene())
+      
         //can add sounds when collide
     }
     
@@ -129,7 +140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score++
         
         scoreLabel.text =  "\(score)"
-        self.view?.presentScene(EndScene())
+        
     }
     
     
