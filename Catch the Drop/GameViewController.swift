@@ -2,19 +2,20 @@
 //  GameViewController.swift
 //  Catch the Drop
 //
-//  Created by Siddhi on 12/6/15.
+//  Created by Richard and Smayra on 12/6/15.
 //  Copyright (c) 2015 Project Concern International. All rights reserved.
 //
 
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController {
 
+class GameViewController: UIViewController{
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let scene = GameScene(fileNamed:"GameScene") {
+                if let scene = GameScene(fileNamed:"GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -26,6 +27,9 @@ class GameViewController: UIViewController {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
             
+            var bgImage = SKSpriteNode(imageNamed: "waterbackground.png")
+                    
+            self.addChild(bgImage)
             skView.presentScene(scene)
         }
     }
@@ -50,4 +54,7 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    
+ 
 }

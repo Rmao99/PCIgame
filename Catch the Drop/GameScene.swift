@@ -27,16 +27,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
- /*       var highscoreDefault = NSUserDefaults.standardUserDefaults()
-        if (highscoreDefault.valueForKey("HighScore") != nil) //something inside of it
-        {
-            highScore = highscoreDefault.valueForKey("Highscore") as! NSInteger
+       var highScoreDefault = NSUserDefaults.standardUserDefaults()
+        
+        if(highScoreDefault.valueForKey("HighScore") == nil){
+            highScore = 0;
         }
-        else
-        {
-            highScore = 0
+        else{
+            highScore = highScoreDefault.valueForKey("HighScore") as! NSInteger
         }
-   */
+       
         physicsWorld.contactDelegate = self //CRUCIAL
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
@@ -59,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(bottom)
         
         //selector: what function it calls every second
-        /*var timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)*/
+        
         
         var DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
@@ -69,15 +68,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100,height: 20))
         scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 0.3)
         scoreLabel.textColor = UIColor.whiteColor()
-        
-    //    livesLabel.text = "\(lives)"
-    //   livesLabel = UILabel(frame: CGRect(x: 100, y: 0, width: 100, height: 20))
-    //    livesLabel.backgroundColor = UIColor(red: 0.6, green: 0.1, blue: 0.1, alpha: 0.3)
-    //    livesLabel.textColor = UIColor.whiteColor()
-        
+  
         self.view?.addSubview(scoreLabel)
-    //    self.view?.addSubview(livesLabel)
-        
+   
         }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -98,14 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
         }
         
-        /*if (firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
-        {
-            firstBody.node?.removeFromParent()
-            //TODO: Replace the log statement with display of Game Over Scene
-            lives++;
-            
-            livesLabel.text = "\(lives)"
-        }*/
+        
         if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
         {
             
@@ -118,10 +104,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
-            
-       //     lives++;
-            
-       //     livesLabel.text = "\(lives)"
         }
     
     }
@@ -132,15 +114,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreDefault.setValue(score, forKey: "Score") //grab this score from NSUerDefaults to update and check high scores. The key("Score) will be used to get the value of scoreDefault
         scoreDefault.synchronize()
         
-      /*  if(score > highScore)
+        if(score > highScore)
         {
-            var highscoreDefault = NSUserDefaults.standardUserDefaults()
-            highscoreDefault.setValue(score, forKey: "HighScore")
-        }*/
+            var highScoreDefault = NSUserDefaults.standardUserDefaults()
+            highScoreDefault.setValue(score, forKey: "HighScore")
+        }
     }
+    
     func collideWithPlayer(drop: SKSpriteNode, person: SKSpriteNode)
     {
-        NSLog("COLLLIDE")
         person.removeFromParent()
         //drop.removeFromParent()
         
@@ -152,7 +134,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collideWithDrop(person: SKSpriteNode, drop: SKSpriteNode)
     {
-        NSLog("SAME")
         drop.removeFromParent()
         //person.removeFromParent()
         
@@ -162,17 +143,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
-    /*func spawnDrop(){
-        
-        var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
-        drop.zPosition = -5
-        drop.position = CGPointMake(player.position.x, player.position.y)
-        let action = SKAction.moveToY(self.size.height + 30, duration: 1.0)
-        drop.runAction(SKAction.repeatActionForever(action))
-        self.addChild(drop)
-        
-    }*/
     
     func spawnDrop(){
         var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
