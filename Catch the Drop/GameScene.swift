@@ -38,8 +38,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         physicsWorld.contactDelegate = self //CRUCIAL
         
-        self.scene?.backgroundColor = UIColor.darkGrayColor()
         
+        self.scene?.backgroundColor = UIColor.darkGrayColor()
+        //TODO: WHAT DO I DOOOOOO
         self.scene?.size = CGSize(width: 640, height: 1136)
         
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
