@@ -23,6 +23,7 @@ class EndScene : SKScene //super class is SKScene
     {
         scene?.backgroundColor = UIColor.darkGrayColor()
         
+        self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         
         GameOverLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 1.5, height: 120))

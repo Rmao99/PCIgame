@@ -27,9 +27,6 @@ class GameViewController: UIViewController{
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
             
-            var bgImage = SKSpriteNode(imageNamed: "waterbackground.png")
-                    
-            self.addChild(bgImage)
             skView.presentScene(scene)
         }
     }
