@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 struct PhysicsCategory{
     static let drop : UInt32 = 1 //000...(32)1
@@ -20,14 +21,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode(imageNamed: "person1.png")
     var score = 0
     var scoreLabel = UILabel()
-    //var lives = 3
-    //var livesLabel = UILabel()
+    var soundPlayer = AVAudioPlayer()
+    var MULTIPLIER = 1.0;
+    
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
+        let url = NSURL.fileURLWithPath(path!) //converts to url
+        
+        var audioPlayer:AVAudioPlayer? //optional AVAudioPlayer incase it isn't created
+        
+        do{
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        }
+        catch{
+            print("Player not available")
+        }
+        
+        return audioPlayer!
+    }
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-       var highScoreDefault = NSUserDefaults.standardUserDefaults()
+        let backgroundMusic = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
+        soundPlayer = backgroundMusic
+        soundPlayer.volume = 0.3
+        soundPlayer.numberOfLoops = -1
+        soundPlayer.play();
+        
+        var highScoreDefault = NSUserDefaults.standardUserDefaults()
         
         if(highScoreDefault.valueForKey("HighScore") == nil){
             highScore = 0;
@@ -45,11 +68,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
-        player.position = CGPointMake(self.size.width/2, self.size.height/5)
+        player.position = CGPointMake(self.size.width/2, self.size.height/15)
         player.physicsBody = SKPhysicsBody(rectangleOfSize: player.size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop //triggers didBeginContact
+        player.physicsBody?.contactTestBitMask = 	PhysicsCategory.drop //triggers didBeginContact
         player.physicsBody?.dynamic = false
         
         let bottomRect = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 1)
@@ -101,7 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
-            
+            soundPlayer.stop()
             self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
@@ -161,7 +184,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         drop.physicsBody?.affectedByGravity = false
         drop.physicsBody?.dynamic = true
         
-        let action = SKAction.moveToY(-70, duration: 3.0)
+        if(score % 10 == 0)
+        {
+            MULTIPLIER = MULTIPLIER * 0.9
+        }
+        
+        let action = SKAction.moveToY(-70, duration: (3.0 * MULTIPLIER))
         let actionDone = SKAction.removeFromParent()
         drop.runAction(SKAction.sequence([action, actionDone]))
         self.addChild(drop)
