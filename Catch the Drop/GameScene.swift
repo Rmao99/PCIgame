@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0
     var scoreLabel = UILabel()
     var soundPlayer = AVAudioPlayer()
+    var splash = AVAudioPlayer()
     var MULTIPLIER = 1.0;
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
@@ -49,6 +50,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         soundPlayer.volume = 0.3
         soundPlayer.numberOfLoops = -1
         soundPlayer.play();
+        
+        let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
+        splash = splashSound;
         
         var highScoreDefault = NSUserDefaults.standardUserDefaults()
         
@@ -104,12 +108,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
            (secondBody.contactTestBitMask == PhysicsCategory.player))
         {
+            
+            if(splash.playing)
+            {
+                splash.stop()
+            }
+            splash.play()
             collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
             
         }
         else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
            (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
+            
+            if(splash.playing)
+            {
+                splash.stop()
+            }
+            splash.play()
             collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)
             
                 //firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
@@ -153,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score++
         scoreLabel.text = "\(score)"
       
-        //can add sounds when collide
+      
     }
     
     func collideWithDrop(person: SKSpriteNode, drop: SKSpriteNode)
