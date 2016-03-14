@@ -18,7 +18,7 @@ struct PhysicsCategory{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var highScore = Int()
-    var player = SKSpriteNode(imageNamed: "person1.png")
+    var player = SKSpriteNode(imageNamed: "walk 4 water (3).png")
     var score = 0
     var scoreLabel = UILabel()
     var soundPlayer = AVAudioPlayer()
@@ -44,6 +44,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        player.xScale = 0.1
+        player.yScale = 0.1
         
         let backgroundMusic = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
         soundPlayer = backgroundMusic
@@ -73,6 +75,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         player.position = CGPointMake(self.size.width/2, self.size.height/15)
+        var point = CGPointMake(player.position.x, player.position.y)
+        var size = CGSize(width: 20, height: 30)
+        
+        //player.physicsBody = SKPhysicsBody(rectangleOfSize: size, center: point)
         player.physicsBody = SKPhysicsBody(rectangleOfSize: player.size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
