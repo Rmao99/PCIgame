@@ -16,8 +16,6 @@
 		23B48A511C95DAC000A1AD71 /* Rain-background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */; };
 		23B48A551C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */; };
 		23B48A5B1C9676CD00A1AD71 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A5A1C9676CD00A1AD71 /* player.png */; };
-		23B48A5D1C9677DE00A1AD71 /* walk 4 water (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A5C1C9677DE00A1AD71 /* walk 4 water (1).png */; };
-		23B48A5F1C9678DF00A1AD71 /* walk 4 water (2).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A5E1C9678DF00A1AD71 /* walk 4 water (2).png */; };
 		23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */; };
 		FE96ABEF1C14D4C400257581 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
 		FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96ABF01C14D4C400257581 /* GameScene.sks */; };
@@ -57,8 +55,6 @@
 		23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rain-background.mp3"; sourceTree = "<group>"; };
 		23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Water-splash-sound-effect.mp3"; sourceTree = "<group>"; };
 		23B48A5A1C9676CD00A1AD71 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
-		23B48A5C1C9677DE00A1AD71 /* walk 4 water (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walk 4 water (1).png"; sourceTree = "<group>"; };
-		23B48A5E1C9678DF00A1AD71 /* walk 4 water (2).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walk 4 water (2).png"; sourceTree = "<group>"; };
 		23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walk 4 water (3).png"; sourceTree = "<group>"; };
 		FE96ABEB1C14D4C400257581 /* Catch the Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE96ABEE1C14D4C400257581 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,11 +128,9 @@
 				FE96ABF01C14D4C400257581 /* GameScene.sks */,
 				FE96ABF21C14D4C400257581 /* GameScene.swift */,
 				FE96ABF41C14D4C400257581 /* GameViewController.swift */,
-				23B48A5E1C9678DF00A1AD71 /* walk 4 water (2).png */,
 				FE96ABF61C14D4C400257581 /* Main.storyboard */,
 				FE96ABF91C14D4C400257581 /* Assets.xcassets */,
 				23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */,
-				23B48A5C1C9677DE00A1AD71 /* walk 4 water (1).png */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
 				23B48A5A1C9676CD00A1AD71 /* player.png */,
 				23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */,
@@ -272,7 +266,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				23B48A5B1C9676CD00A1AD71 /* player.png in Resources */,
-				23B48A5D1C9677DE00A1AD71 /* walk 4 water (1).png in Resources */,
 				238C1DAD1C4C373800019101 /* wuterdrip.png in Resources */,
 				23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */,
 				FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */,
@@ -282,7 +275,6 @@
 				FE96ABFD1C14D4C400257581 /* LaunchScreen.storyboard in Resources */,
 				FE96ABFA1C14D4C400257581 /* Assets.xcassets in Resources */,
 				23B48A551C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 in Resources */,
-				23B48A5F1C9678DF00A1AD71 /* walk 4 water (2).png in Resources */,
 				23B48A471C837C4200A1AD71 /* spark.png in Resources */,
 				23B48A461C837C4200A1AD71 /* RainParticle.sks in Resources */,
 				FE96ABF81C14D4C400257581 /* Main.storyboard in Resources */,
