@@ -30,7 +30,10 @@ class EndScene : SKScene //super class is SKScene
         mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
         mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 150)
         mainMenuBtn.setTitle("Main Menu", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
-        mainMenuBtn.layer.borderColor = UIColor.redColor().CGColor
+        mainMenuBtn.backgroundColor = UIColor.clearColor()
+        mainMenuBtn.layer.cornerRadius = 5
+        mainMenuBtn.layer.borderWidth = 1
+        mainMenuBtn.layer.borderColor = UIColor.blackColor().CGColor
         mainMenuBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         mainMenuBtn.addTarget(self, action: Selector("MainMenu"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function Restart()
         self.view?.addSubview(mainMenuBtn);
@@ -52,7 +55,10 @@ class EndScene : SKScene //super class is SKScene
         self.view?.addSubview(GameOverLbl2)
         
         restartBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
-        restartBtn.layer.borderColor = UIColor.greenColor().CGColor
+        restartBtn.backgroundColor = UIColor.clearColor()
+        restartBtn.layer.cornerRadius = 5
+        restartBtn.layer.borderWidth = 1
+        restartBtn.layer.borderColor = UIColor.blackColor().CGColor
         restartBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2 + 150)
         restartBtn.setTitle("Restart?", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
