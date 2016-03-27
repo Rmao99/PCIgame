@@ -59,7 +59,7 @@ class EndScene : SKScene //super class is SKScene
         restartBtn.layer.cornerRadius = 5
         restartBtn.layer.borderWidth = 1
         restartBtn.layer.borderColor = UIColor.blackColor().CGColor
-        restartBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2 + 150)
+        restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 150)
         restartBtn.setTitle("Restart?", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         restartBtn.addTarget(self, action: Selector("Restart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function Restart()
@@ -69,7 +69,7 @@ class EndScene : SKScene //super class is SKScene
         var score = scoreDefault.valueForKey("Score") as! NSInteger;
         NSLog("\(score)")
         
-        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3-20, height: 30))
+        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3, height: 30))
         ScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 3 + 90)
         ScoreLbl.text = "Score: \(score)"
         ScoreLbl.font = ScoreLbl.font.fontWithSize(30)

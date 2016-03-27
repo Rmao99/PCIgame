@@ -24,6 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var soundPlayer = AVAudioPlayer()
     var splash = AVAudioPlayer()
     var MULTIPLIER = 1.0;
+    var isDone = false
+    var DropTimer = NSTimer()
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -76,10 +78,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player.position = CGPointMake(self.size.width/2, self.size.height/15)
         var point = CGPointMake(player.position.x, player.position.y)
-        var size = CGSize(width: 20, height: 30)
+        var size = CGSize(width: 13, height: 10)
         
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size, center: point)
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: player.size)
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
         player.physicsBody?.contactTestBitMask = 	PhysicsCategory.drop //triggers didBeginContact
@@ -94,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //selector: what function it calls every second
         
         
-        var DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
         
         
@@ -111,29 +113,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var firstBody : SKPhysicsBody = contact.bodyA   //contact is passed from parameter and
         var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
         
+        checkScore()
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
            (secondBody.contactTestBitMask == PhysicsCategory.player))
         {
-            
-            if(splash.playing)
-            {
-                splash.stop()
-            }
+            splash.stop()
             splash.play()
-            collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
-            
+            if(firstBody.node != nil && secondBody.node != nil)
+            {
+                collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
+            }
         }
         else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
            (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-            
-            if(splash.playing)
-            {
-                splash.stop()
-            }
+            splash.stop()
             splash.play()
-            collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)
             
+            if(secondBody.node != nil && firstBody.node != nil)
+            {
+            collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)
+            }
                 //firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
         }
         
@@ -154,6 +154,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     }
     
+    func checkScore()
+    {
+        if(score % 10 == 0 && isDone == false && score != 0)
+        {
+            
+            isDone = true
+            MULTIPLIER = MULTIPLIER * 0.75
+            DropTimer.invalidate()
+            DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0 * MULTIPLIER, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+            
+        }
+    }
     func updateScore()
     {
         var scoreDefault = NSUserDefaults.standardUserDefaults()
@@ -206,12 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         drop.physicsBody?.affectedByGravity = false
         drop.physicsBody?.dynamic = true
         
-        if(score % 10 == 0)
-        {
-            MULTIPLIER = MULTIPLIER * 0.9
-        }
-        
-        let action = SKAction.moveToY(-70, duration: (3.0 * MULTIPLIER))
+        let action = SKAction.moveToY(-70, duration: (3.0))
         let actionDone = SKAction.removeFromParent()
         drop.runAction(SKAction.sequence([action, actionDone]))
         self.addChild(drop)
