@@ -13,7 +13,7 @@ import GameKit
 
 class EndScene : SKScene //super class is SKScene
 {
-    var restartBtn : UIButton! //instantiates this var as a UI button
+    var restartBtn : UIButton! //instantiates this var as an absolute UI button
     var ScoreLbl : UILabel!
     var GameOverLbl : UILabel!
     var HighScoreLbl: UILabel!
