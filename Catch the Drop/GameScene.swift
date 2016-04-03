@@ -113,6 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var firstBody : SKPhysicsBody = contact.bodyA   //contact is passed from parameter and
         var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
         
+        isDone = false
         checkScore()
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
            (secondBody.contactTestBitMask == PhysicsCategory.player))
@@ -140,7 +141,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
         {
-            
             updateScore();
             
         
