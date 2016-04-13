@@ -28,7 +28,7 @@ class EndScene : SKScene //super class is SKScene
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
-        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 150)
+        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 180)
         mainMenuBtn.setTitle("Main Menu", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         mainMenuBtn.backgroundColor = UIColor.clearColor()
         mainMenuBtn.layer.cornerRadius = 5
@@ -59,7 +59,7 @@ class EndScene : SKScene //super class is SKScene
         restartBtn.layer.cornerRadius = 5
         restartBtn.layer.borderWidth = 1
         restartBtn.layer.borderColor = UIColor.blackColor().CGColor
-        restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 150)
+        restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 180)
         restartBtn.setTitle("Restart?", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         restartBtn.addTarget(self, action: Selector("Restart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function Restart()
