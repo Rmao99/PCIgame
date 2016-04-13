@@ -2,7 +2,7 @@
 //  EndScene.swift
 //  Catch the Drop
 //
-//  Created by Callie on 2/28/16.
+//  Created by Richard Mao and Smayra Ramesh on 2/28/16.
 //  Copyright © 2016 Project Concern International. All rights reserved.
 //
 
