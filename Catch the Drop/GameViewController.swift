@@ -16,8 +16,10 @@ class GameViewController: UIViewController{
         
         
         super.viewDidLoad()
-                if let scene = GameScene(fileNamed:"GameScene") {
+        
+        let scene = GameScene(size: view.bounds.size)
             // Configure the view.
+           
             let skView = self.view as! SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
@@ -26,10 +28,10 @@ class GameViewController: UIViewController{
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .ResizeFill
             
             skView.presentScene(scene)
-        }
+        
     }
 
     override func shouldAutorotate() -> Bool {

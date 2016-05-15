@@ -21,6 +21,7 @@ class EndScene : SKScene //super class is SKScene
     var mainMenuBtn : UIButton!
     
     var didRestart = false;
+    var didMainRestart = false;
     override func didMoveToView(view: SKView)
     {
         scene?.backgroundColor = UIColor.darkGrayColor()
@@ -35,7 +36,7 @@ class EndScene : SKScene //super class is SKScene
         mainMenuBtn.layer.borderWidth = 1
         mainMenuBtn.layer.borderColor = UIColor.blackColor().CGColor
         mainMenuBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-        mainMenuBtn.addTarget(self, action: Selector("MainMenu"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function Restart()
+        mainMenuBtn.addTarget(self, action: Selector("MainMenuRestart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function MainMenuRestart()
         self.view?.addSubview(mainMenuBtn);
 
         
@@ -101,7 +102,7 @@ class EndScene : SKScene //super class is SKScene
     {
         if(didRestart == false) //incase restart is called multiple times during updates
         {
-            self.view?.presentScene(GameScene(), transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
+            self.view?.presentScene(GamePlayScene(), transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
             restartBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             GameOverLbl.removeFromSuperview()
@@ -110,6 +111,26 @@ class EndScene : SKScene //super class is SKScene
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
             didRestart = true;
+        }
+    }
+    
+    func MainMenuRestart()
+    {
+        
+        if(didMainRestart == false) //incase restart is called multiple times during updates
+        {
+            let nextScene = GameScene(size: self.scene!.size)
+            nextScene.scaleMode = SKSceneScaleMode.ResizeFill
+            
+            self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
+            restartBtn.removeFromSuperview()
+            ScoreLbl.removeFromSuperview()
+            GameOverLbl.removeFromSuperview()
+            GameOverLbl2.removeFromSuperview()
+            HighScoreLbl.removeFromSuperview()
+            ScoreLbl.removeFromSuperview()
+            mainMenuBtn.removeFromSuperview()
+            didMainRestart = true;
         }
     }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		233FA8C71CE8DC1E00095FDA /* cartoon flower.png in Resources */ = {isa = PBXBuildFile; fileRef = 233FA8C61CE8DC1E00095FDA /* cartoon flower.png */; };
+		233FA8C91CE8DC2300095FDA /* player_play (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 233FA8C81CE8DC2300095FDA /* player_play (1).png */; };
+		233FA8CB1CE8E24E00095FDA /* GamePlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233FA8CA1CE8E24E00095FDA /* GamePlayScene.swift */; };
 		238C1DAD1C4C373800019101 /* wuterdrip.png in Resources */ = {isa = PBXBuildFile; fileRef = 238C1DAC1C4C373800019101 /* wuterdrip.png */; };
 		23A1420E1C34594F000BDCC4 /* PERSON1.png in Resources */ = {isa = PBXBuildFile; fileRef = 23A1420C1C34594F000BDCC4 /* PERSON1.png */; };
 		23B48A3F1C83736E00A1AD71 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B48A3E1C83736E00A1AD71 /* EndScene.swift */; };
@@ -46,6 +49,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		233FA8C61CE8DC1E00095FDA /* cartoon flower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cartoon flower.png"; sourceTree = "<group>"; };
+		233FA8C81CE8DC2300095FDA /* player_play (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player_play (1).png"; sourceTree = "<group>"; };
+		233FA8CA1CE8E24E00095FDA /* GamePlayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayScene.swift; sourceTree = "<group>"; };
 		238C1DAC1C4C373800019101 /* wuterdrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wuterdrip.png; path = ../../../Desktop/wuterdrip.png; sourceTree = "<group>"; };
 		23A1420C1C34594F000BDCC4 /* PERSON1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PERSON1.png; path = ../../../Desktop/PERSON1.png; sourceTree = "<group>"; };
 		23B48A3E1C83736E00A1AD71 /* EndScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndScene.swift; path = ../EndScene.swift; sourceTree = "<group>"; };
@@ -127,11 +133,14 @@
 				23B48A451C837C4200A1AD71 /* spark.png */,
 				FE96ABF01C14D4C400257581 /* GameScene.sks */,
 				FE96ABF21C14D4C400257581 /* GameScene.swift */,
+				233FA8CA1CE8E24E00095FDA /* GamePlayScene.swift */,
 				FE96ABF41C14D4C400257581 /* GameViewController.swift */,
 				FE96ABF61C14D4C400257581 /* Main.storyboard */,
 				FE96ABF91C14D4C400257581 /* Assets.xcassets */,
 				23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
+				233FA8C81CE8DC2300095FDA /* player_play (1).png */,
+				233FA8C61CE8DC1E00095FDA /* cartoon flower.png */,
 				23B48A5A1C9676CD00A1AD71 /* player.png */,
 				23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */,
 				23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */,
@@ -274,7 +283,9 @@
 				23B48A4F1C8CBED200A1AD71 /* waterbackground.png in Resources */,
 				FE96ABFD1C14D4C400257581 /* LaunchScreen.storyboard in Resources */,
 				FE96ABFA1C14D4C400257581 /* Assets.xcassets in Resources */,
+				233FA8C91CE8DC2300095FDA /* player_play (1).png in Resources */,
 				23B48A551C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 in Resources */,
+				233FA8C71CE8DC1E00095FDA /* cartoon flower.png in Resources */,
 				23B48A471C837C4200A1AD71 /* spark.png in Resources */,
 				23B48A461C837C4200A1AD71 /* RainParticle.sks in Resources */,
 				FE96ABF81C14D4C400257581 /* Main.storyboard in Resources */,
@@ -303,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE96ABF31C14D4C400257581 /* GameScene.swift in Sources */,
+				233FA8CB1CE8E24E00095FDA /* GamePlayScene.swift in Sources */,
 				FE96ABF51C14D4C400257581 /* GameViewController.swift in Sources */,
 				23B48A3F1C83736E00A1AD71 /* EndScene.swift in Sources */,
 				FE96ABEF1C14D4C400257581 /* AppDelegate.swift in Sources */,
