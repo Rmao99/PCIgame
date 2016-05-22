@@ -22,7 +22,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var score = 0
     var scoreLabel = UILabel()
     var soundPlayer = AVAudioPlayer()
-    var splash = AVAudioPlayer()
+    //var splash = AVAudioPlayer()
+    let splash = SKAction.playSoundFileNamed("Water-splash-sound-effect.mp3", waitForCompletion: false)
     var MULTIPLIER = 1.0;
     var isDone = false
     var DropTimer = NSTimer()
@@ -55,8 +56,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         soundPlayer.numberOfLoops = -1
         soundPlayer.play();
         
-        let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
-        splash = splashSound;
+ //       let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
+ //       splash = splashSound;
         
         var highScoreDefault = NSUserDefaults.standardUserDefaults()
         
@@ -80,11 +81,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var point = CGPointMake(player.position.x, player.position.y)
         var size = CGSize(width: 13, height: 10)
         
-        //player.physicsBody = SKPhysicsBody(rectangleOfSize: size, center: point)
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        var physicsBodySize:CGSize = CGSize(width: player.size.width/10, height : 10.0)
+        
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x: 0.0, y: 10.0))
+        //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
-        player.physicsBody?.contactTestBitMask = 	PhysicsCategory.drop //triggers didBeginContact
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop //triggers didBeginContact
         player.physicsBody?.dynamic = false
         
         let bottomRect = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 1)
@@ -118,8 +121,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
             (secondBody.contactTestBitMask == PhysicsCategory.player))
         {
-            splash.stop()
-            splash.play()
+            self.runAction(splash)
             if(firstBody.node != nil && secondBody.node != nil)
             {
                 collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
@@ -128,9 +130,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
             (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-            splash.stop()
-            splash.play()
-            
+         //   splash.stop()
+         //   splash.play()
+            self.runAction(splash)
             if(secondBody.node != nil && firstBody.node != nil)
             {
                 collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)

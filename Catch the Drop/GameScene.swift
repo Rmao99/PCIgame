@@ -24,9 +24,11 @@ class GameScene : SKScene
         BG.size.width = viewSize.width + 100
         
         let myLabel = SKLabelNode(fontNamed: "Chalkduster")
+        myLabel.fontColor = UIColor.blackColor()
         myLabel.text = "Catch The Drop"
         myLabel.fontSize = 35
         myLabel.position = CGPoint(x: viewSize.width/2, y: viewSize.height * 0.8)
+        myLabel.zPosition = 1
         
         playBtn = SKSpriteNode(imageNamed: "playBtn")
         playBtn.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2)
