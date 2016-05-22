@@ -81,9 +81,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var point = CGPointMake(player.position.x, player.position.y)
         var size = CGSize(width: 13, height: 10)
         
-        var physicsBodySize:CGSize = CGSize(width: player.size.width/10, height : 10.0)
+        var physicsBodySize:CGSize = CGSize(width: 10.0, height : 5.0)
         
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x: 0.0, y: 10.0))
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 0.0))
+    
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
