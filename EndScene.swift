@@ -30,14 +30,27 @@ class EndScene : SKScene //super class is SKScene
         
         mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
         mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 180)
-        mainMenuBtn.setTitle("Main Menu", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
+        mainMenuBtn.setTitle("Main Menu", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         mainMenuBtn.backgroundColor = UIColor.clearColor()
-        mainMenuBtn.layer.cornerRadius = 5
+        mainMenuBtn.layer.cornerRadius = 10
         mainMenuBtn.layer.borderWidth = 1
         mainMenuBtn.layer.borderColor = UIColor.blackColor().CGColor
         mainMenuBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        mainMenuBtn.addTarget(self, action: Selector("mainButtonClicked"), forControlEvents: UIControlEvents.TouchDown)
+        mainMenuBtn.addTarget(self, action: Selector("mainButtonNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
         mainMenuBtn.addTarget(self, action: Selector("MainMenuRestart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function MainMenuRestart()
         self.view?.addSubview(mainMenuBtn);
+       
+        UIView.animateWithDuration(0.6 ,
+            animations: {
+                self.mainMenuBtn.transform = CGAffineTransformMakeScale(0.6,0.6)
+            },
+            completion:{ finish in
+                UIView.animateWithDuration(0.6){
+                    self.mainMenuBtn.transform = CGAffineTransformIdentity
+                }
+            
+            })
 
         
         GameOverLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 1.5, height: view.frame.height/2))
@@ -57,14 +70,27 @@ class EndScene : SKScene //super class is SKScene
         
         restartBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
         restartBtn.backgroundColor = UIColor.clearColor()
-        restartBtn.layer.cornerRadius = 5
+        restartBtn.layer.cornerRadius = 10
         restartBtn.layer.borderWidth = 1
         restartBtn.layer.borderColor = UIColor.blackColor().CGColor
         restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 180)
         restartBtn.setTitle("Restart?", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        restartBtn.addTarget(self, action: Selector("restartButtonClicked"), forControlEvents: UIControlEvents.TouchDown)
+        restartBtn.addTarget(self, action: Selector("restartButtonNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
         restartBtn.addTarget(self, action: Selector("Restart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function Restart()
         self.view?.addSubview(restartBtn);
+        
+        UIView.animateWithDuration(0.6 ,
+            animations: {
+                self.restartBtn.transform = CGAffineTransformMakeScale(0.6,0.6)
+            },
+            completion:{ finish in
+                UIView.animateWithDuration(0.6){
+                    self.restartBtn.transform = CGAffineTransformIdentity
+                }
+                
+        })
         
         var scoreDefault = NSUserDefaults.standardUserDefaults()
         var score = scoreDefault.valueForKey("Score") as! NSInteger;
@@ -92,10 +118,29 @@ class EndScene : SKScene //super class is SKScene
         self.view?.addSubview(HighScoreLbl)
         
     }
+    
     func MainMenu()
     {
         //PRESENT MAINMENU
         
+    }
+    
+    func restartButtonNotClicked()
+    {
+        restartBtn.backgroundColor = UIColor.clearColor()
+    }
+    func restartButtonClicked()
+    {
+        restartBtn.backgroundColor = UIColor.grayColor()
+    }
+    func mainButtonNotClicked()
+    {
+        mainMenuBtn.backgroundColor = UIColor.clearColor()
+    }
+    
+    func mainButtonClicked()
+    {
+        mainMenuBtn.backgroundColor = UIColor.grayColor()
     }
     
     func Restart()
