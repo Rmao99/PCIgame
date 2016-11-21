@@ -26,7 +26,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     let splash = SKAction.playSoundFileNamed("Water-splash-sound-effect.mp3", waitForCompletion: false)
     var MULTIPLIER = 1.0;
     var isDone = false
+    var isGamePaused = false
     var DropTimer = NSTimer()
+    
+    var pauseBtn : UIButton!
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -70,6 +73,17 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self //CRUCIAL
         
+        pauseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        pauseBtn.center = CGPoint(x: view.frame.size.width - 100 , y: view.frame.size.width / 2)
+        pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
+        pauseBtn.backgroundColor = UIColor.clearColor()
+        pauseBtn.layer.cornerRadius = 10
+        pauseBtn.layer.borderWidth = 1
+        pauseBtn.layer.borderColor = UIColor.blackColor().CGColor
+        pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        pauseBtn.addTarget(self, action: Selector("pauseClick"), forControlEvents: UIControlEvents.TouchDown)
+        self.view?.addSubview(pauseBtn);
+
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
         //TODO: WHAT DO I DOOOOOO
@@ -163,7 +177,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         {
             
             isDone = true
-            MULTIPLIER = MULTIPLIER * 0.75
+            MULTIPLIER = MULTIPLIER * 0.80
             DropTimer.invalidate()
             DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0 * MULTIPLIER, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
             
@@ -204,6 +218,25 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func pauseClick()
+    {
+        if(isGamePaused == false)
+        {
+           scene!.view!.paused = true
+           isGamePaused = true
+           DropTimer.invalidate()
+           return;
+        }
+        
+        if(isGamePaused == true)
+        {
+            scene!.view!.paused = false
+            isGamePaused = false
+            DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0 * MULTIPLIER, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+            return;
+        }
+        
+    }
     
     func spawnDrop(){
         var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
@@ -219,6 +252,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
         //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
         drop.physicsBody?.affectedByGravity = false
+        drop.physicsBody?.allowsRotation = false
         drop.physicsBody?.dynamic = true
         
         let action = SKAction.moveToY(-70, duration: (3.0))

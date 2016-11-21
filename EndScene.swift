@@ -19,12 +19,23 @@ class EndScene : SKScene //super class is SKScene
     var HighScoreLbl: UILabel!
     var GameOverLbl2 : UILabel!
     var mainMenuBtn : UIButton!
+    var linkBtn : UIButton!
     
     var didRestart = false;
     var didMainRestart = false;
     override func didMoveToView(view: SKView)
     {
-        scene?.backgroundColor = UIColor.darkGrayColor()
+        
+        linkBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
+        linkBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 300)
+        linkBtn.backgroundColor = UIColor.clearColor()
+        linkBtn.setTitle("About us", forState: UIControlState.Normal)
+        linkBtn.layer.borderWidth = 1
+        linkBtn.layer.borderColor = UIColor.blackColor().CGColor
+        linkBtn.addTarget(self, action: Selector("hyperlink"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view?.addSubview(linkBtn)
+        
+        scene?.backgroundColor = UIColor.cyanColor()
         
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
@@ -74,7 +85,7 @@ class EndScene : SKScene //super class is SKScene
         restartBtn.layer.borderWidth = 1
         restartBtn.layer.borderColor = UIColor.blackColor().CGColor
         restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 180)
-        restartBtn.setTitle("Restart?", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
+        restartBtn.setTitle("Restart", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         restartBtn.addTarget(self, action: Selector("restartButtonClicked"), forControlEvents: UIControlEvents.TouchDown)
         restartBtn.addTarget(self, action: Selector("restartButtonNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
@@ -119,6 +130,13 @@ class EndScene : SKScene //super class is SKScene
         
     }
     
+    func hyperlink()
+    {
+        let url = NSURL(string: "https://www.pciglobal.org/w4w2016/")
+        
+        UIApplication.sharedApplication().openURL(url!)
+    }
+    
     func MainMenu()
     {
         //PRESENT MAINMENU
@@ -149,6 +167,7 @@ class EndScene : SKScene //super class is SKScene
         {
             self.view?.presentScene(GamePlayScene(), transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
             restartBtn.removeFromSuperview()
+            linkBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             GameOverLbl.removeFromSuperview()
             GameOverLbl2.removeFromSuperview()
@@ -169,6 +188,7 @@ class EndScene : SKScene //super class is SKScene
             
             self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
             restartBtn.removeFromSuperview()
+            linkBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             GameOverLbl.removeFromSuperview()
             GameOverLbl2.removeFromSuperview()
