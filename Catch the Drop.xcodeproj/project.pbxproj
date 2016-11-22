@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2316DFD11DE3A284004CEF57 /* pause.jpe in Resources */ = {isa = PBXBuildFile; fileRef = 2316DFCF1DE3A284004CEF57 /* pause.jpe */; };
-		2316DFD21DE3A284004CEF57 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 2316DFD01DE3A284004CEF57 /* play.png */; };
 		233FA8C71CE8DC1E00095FDA /* cartoon flower.png in Resources */ = {isa = PBXBuildFile; fileRef = 233FA8C61CE8DC1E00095FDA /* cartoon flower.png */; };
 		233FA8C91CE8DC2300095FDA /* player_play (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 233FA8C81CE8DC2300095FDA /* player_play (1).png */; };
 		233FA8CB1CE8E24E00095FDA /* GamePlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233FA8CA1CE8E24E00095FDA /* GamePlayScene.swift */; };
@@ -51,8 +49,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2316DFCF1DE3A284004CEF57 /* pause.jpe */ = {isa = PBXFileReference; lastKnownFileType = file; path = pause.jpe; sourceTree = "<group>"; };
-		2316DFD01DE3A284004CEF57 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		233FA8C61CE8DC1E00095FDA /* cartoon flower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cartoon flower.png"; sourceTree = "<group>"; };
 		233FA8C81CE8DC2300095FDA /* player_play (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player_play (1).png"; sourceTree = "<group>"; };
 		233FA8CA1CE8E24E00095FDA /* GamePlayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlayScene.swift; sourceTree = "<group>"; };
@@ -142,8 +138,6 @@
 				FE96ABF61C14D4C400257581 /* Main.storyboard */,
 				FE96ABF91C14D4C400257581 /* Assets.xcassets */,
 				23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */,
-				2316DFCF1DE3A284004CEF57 /* pause.jpe */,
-				2316DFD01DE3A284004CEF57 /* play.png */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
 				233FA8C81CE8DC2300095FDA /* player_play (1).png */,
 				233FA8C61CE8DC1E00095FDA /* cartoon flower.png */,
@@ -281,11 +275,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				23B48A5B1C9676CD00A1AD71 /* player.png in Resources */,
-				2316DFD21DE3A284004CEF57 /* play.png in Resources */,
 				238C1DAD1C4C373800019101 /* wuterdrip.png in Resources */,
 				23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */,
 				FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */,
-				2316DFD11DE3A284004CEF57 /* pause.jpe in Resources */,
 				23B48A511C95DAC000A1AD71 /* Rain-background.mp3 in Resources */,
 				23A1420E1C34594F000BDCC4 /* PERSON1.png in Resources */,
 				23B48A4F1C8CBED200A1AD71 /* waterbackground.png in Resources */,

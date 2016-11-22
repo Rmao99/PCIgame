@@ -5,7 +5,6 @@
 //  Created by Richard and Smayra on 12/6/15.
 //  Copyright (c) 2015 Project Concern International. All rights reserved.
 //
-
 import SpriteKit
 import AVFoundation
 
@@ -64,8 +63,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         soundPlayer.numberOfLoops = -1
         soundPlayer.play();
         
- //       let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
- //       splash = splashSound;
+        //       let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
+        //       splash = splashSound;
         
         var highScoreDefault = NSUserDefaults.standardUserDefaults()
         
@@ -96,7 +95,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var physicsBodySize:CGSize = CGSize(width: 10.0, height : 5.0)
         
         player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 0.0))
-    
+        
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
@@ -114,33 +113,33 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //new spawning
         wait = SKAction.waitForDuration(MULTIPLIER)
         spawn = SKAction.runBlock
-        {
-            var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
-            var minValue = self.size.width/8
-            var maxValue = self.size.width - 20
-            
-            var spawnPoint = UInt32(maxValue - minValue)
-            
-            drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
-            drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
-            drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
-            drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
-            //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
-            //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
-            drop.physicsBody?.affectedByGravity = false
-            drop.physicsBody?.allowsRotation = false
-            drop.physicsBody?.dynamic = true
-            
-            let action = SKAction.moveToY(-70, duration: (3.0))
-            let actionDone = SKAction.removeFromParent()
-            drop.runAction(SKAction.sequence([action, actionDone]))
-            self.addChild(drop)
+            {
+                var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+                var minValue = self.size.width/8
+                var maxValue = self.size.width - 20
+                
+                var spawnPoint = UInt32(maxValue - minValue)
+                
+                drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+                drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
+                drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
+                drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+                //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+                //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
+                drop.physicsBody?.affectedByGravity = false
+                drop.physicsBody?.allowsRotation = false
+                drop.physicsBody?.dynamic = true
+                
+                let action = SKAction.moveToY(-70, duration: (3.0))
+                let actionDone = SKAction.removeFromParent()
+                drop.runAction(SKAction.sequence([action, actionDone]))
+                self.addChild(drop)
         }
         
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
         self.runAction(sequence, completion: {self.updateSpawning()})
-    
-//        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+        
+        //        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
         
         
@@ -169,8 +168,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
             (secondBody.contactTestBitMask == PhysicsCategory.drop))
         {
-         //   splash.stop()
-         //   splash.play()
+            //   splash.stop()
+            //   splash.play()
             self.runAction(splash)
             if(secondBody.node != nil && firstBody.node != nil)
             {
@@ -203,7 +202,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         wait = SKAction.waitForDuration(MULTIPLIER)
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
         self.runAction(sequence, completion: {self.updateSpawning()})
-
+        
     }
     func updateScore()
     {
@@ -260,7 +259,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         self.view?.paused = false
         //scene?.view?.paused = false
     }
-
+    
     func resumeClick()
     {
         print("resume click")
