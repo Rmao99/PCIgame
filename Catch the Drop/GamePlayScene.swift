@@ -29,7 +29,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var isGamePaused = false
     var DropTimer = NSTimer()
     
+    var wait : SKAction!
+    var spawn : SKAction!
+    var sequence : SKAction!
+    
     var pauseBtn : UIButton!
+    var resumeBtn: UIButton!
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -73,17 +78,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self //CRUCIAL
         
-        pauseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        pauseBtn.center = CGPoint(x: view.frame.size.width - 100 , y: view.frame.size.width / 2)
-        pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
-        pauseBtn.backgroundColor = UIColor.clearColor()
-        pauseBtn.layer.cornerRadius = 10
-        pauseBtn.layer.borderWidth = 1
-        pauseBtn.layer.borderColor = UIColor.blackColor().CGColor
-        pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        pauseBtn.addTarget(self, action: Selector("pauseClick"), forControlEvents: UIControlEvents.TouchDown)
-        self.view?.addSubview(pauseBtn);
-
+        //pauseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        
+        
+        createPauseBtn()
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
         //TODO: WHAT DO I DOOOOOO
@@ -113,8 +111,36 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         //selector: what function it calls every second
         
+        //new spawning
+        wait = SKAction.waitForDuration(MULTIPLIER)
+        spawn = SKAction.runBlock
+        {
+            var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+            var minValue = self.size.width/8
+            var maxValue = self.size.width - 20
+            
+            var spawnPoint = UInt32(maxValue - minValue)
+            
+            drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+            drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
+            drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
+            drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+            //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
+            drop.physicsBody?.affectedByGravity = false
+            drop.physicsBody?.allowsRotation = false
+            drop.physicsBody?.dynamic = true
+            
+            let action = SKAction.moveToY(-70, duration: (3.0))
+            let actionDone = SKAction.removeFromParent()
+            drop.runAction(SKAction.sequence([action, actionDone]))
+            self.addChild(drop)
+        }
         
-        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
+        sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
+        self.runAction(sequence, completion: {self.updateSpawning()})
+    
+//        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
         self.addChild(player)
         
         
@@ -131,8 +157,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var firstBody : SKPhysicsBody = contact.bodyA   //contact is passed from parameter and
         var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
         
-        isDone = false
-        checkScore()
         if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
             (secondBody.contactTestBitMask == PhysicsCategory.player))
         {
@@ -164,6 +188,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
             soundPlayer.stop()
+            pauseBtn.removeFromSuperview()
+            resumeBtn.removeFromSuperview()
             self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
@@ -171,17 +197,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func checkScore()
+    func updateSpawning()
     {
-        if(score % 10 == 0 && isDone == false && score != 0)
-        {
-            
-            isDone = true
-            MULTIPLIER = MULTIPLIER * 0.80
-            DropTimer.invalidate()
-            DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0 * MULTIPLIER, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
-            
-        }
+        MULTIPLIER = MULTIPLIER * 0.80
+        wait = SKAction.waitForDuration(MULTIPLIER)
+        sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
+        self.runAction(sequence, completion: {self.updateSpawning()})
+
     }
     func updateScore()
     {
@@ -220,22 +242,65 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func pauseClick()
     {
-        if(isGamePaused == false)
-        {
-           scene!.view!.paused = true
-           isGamePaused = true
-           DropTimer.invalidate()
-           return;
-        }
+        print("pause click")
+        pauseBtn.removeFromSuperview()
+        createResumeBtn()
+        self.runAction(SKAction.runBlock(self.pauseGame))
+    }
+    func pauseGame()
+    {
+        //scene?.physicsWorld.speed = 0
+        self.view?.paused = true
         
-        if(isGamePaused == true)
-        {
-            scene!.view!.paused = false
-            isGamePaused = false
-            DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0 * MULTIPLIER, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
-            return;
-        }
-        
+        //scene?.view?.paused = true
+    }
+    
+    func resumeGame()
+    {
+        self.view?.paused = false
+        //scene?.view?.paused = false
+    }
+
+    func resumeClick()
+    {
+        print("resume click")
+        resumeBtn.removeFromSuperview()
+        createPauseBtn()
+        resumeGame()
+    }
+    
+    func createPauseBtn()
+    {
+        print("create pause btn")
+        pauseBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        pauseBtn.frame = CGRectMake(100,100,100,100)
+        pauseBtn.setImage(UIImage(named: "pause.jpe") as UIImage?, forState: .Normal)
+        pauseBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 40)
+        //pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
+        //pauseBtn.backgroundColor = UIColor.clearColor()
+        pauseBtn.layer.cornerRadius = 10
+        pauseBtn.layer.borderWidth = 1
+        pauseBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        pauseBtn.addTarget(self, action: Selector("pauseClick"), forControlEvents: UIControlEvents.TouchDown)
+        self.view?.addSubview(pauseBtn);
+    }
+    
+    func createResumeBtn()
+    {
+        print("create resume btn")
+        resumeBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        resumeBtn.frame = CGRectMake(100,100,100,100)
+        resumeBtn.setImage(UIImage(named: "play.png") as UIImage?, forState: .Normal)
+        resumeBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 40)
+        //pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
+        //pauseBtn.backgroundColor = UIColor.clearColor()
+        resumeBtn.layer.cornerRadius = 10
+        resumeBtn.layer.borderWidth = 1
+        resumeBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        resumeBtn.addTarget(self, action: Selector("resumeClick"), forControlEvents: UIControlEvents.TouchDown)
+        self.view?.addSubview(resumeBtn);
     }
     
     func spawnDrop(){
