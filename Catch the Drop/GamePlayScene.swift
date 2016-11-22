@@ -35,6 +35,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var pauseBtn : UIButton!
     var resumeBtn: UIButton!
     
+    var numberLbl : UILabel!
+    
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
@@ -53,6 +55,14 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMoveToView(view: SKView) {
+        
+        numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3, height: 30))
+        numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
+        numberLbl.text = "Resume in 1s"
+        numberLbl.font = numberLbl.font.fontWithSize(30)
+        numberLbl.textColor = UIColor.whiteColor()
+        
+        
         /* Setup your scene here */
         player.xScale = 0.1
         player.yScale = 0.1
@@ -257,6 +267,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     func resumeGame()
     {
         self.view?.paused = false
+        sleep(1)
+        numberLbl.removeFromSuperview()
         //scene?.view?.paused = false
     }
     
@@ -299,7 +311,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         resumeBtn.layer.borderColor = UIColor.blackColor().CGColor
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         resumeBtn.addTarget(self, action: Selector("resumeClick"), forControlEvents: UIControlEvents.TouchDown)
-        self.view?.addSubview(resumeBtn);
+        self.view?.addSubview(resumeBtn)
+        self.view?.addSubview(numberLbl)
     }
     
     func spawnDrop(){
