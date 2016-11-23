@@ -37,6 +37,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     var numberLbl : UILabel!
     
+    let gameLayer = SKNode()
+    let pauseLayer = SKNode()
+    
+    
+    
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
@@ -55,6 +60,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMoveToView(view: SKView) {
+        
+        self.addChild(gameLayer)
         
         numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3, height: 30))
         numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
@@ -143,14 +150,14 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 let action = SKAction.moveToY(-70, duration: (3.0))
                 let actionDone = SKAction.removeFromParent()
                 drop.runAction(SKAction.sequence([action, actionDone]))
-                self.addChild(drop)
+                self.gameLayer.addChild(drop)
         }
         
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
-        self.runAction(sequence, completion: {self.updateSpawning()})
+        gameLayer.runAction(sequence, completion: {self.updateSpawning()})
         
         //        DropTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("spawnDrop"), userInfo: nil, repeats: true)
-        self.addChild(player)
+        gameLayer.addChild(player)
         
         
         scoreLabel.text = "\(score)"
@@ -211,7 +218,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         MULTIPLIER = MULTIPLIER * 0.80
         wait = SKAction.waitForDuration(MULTIPLIER)
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
-        self.runAction(sequence, completion: {self.updateSpawning()})
+        gameLayer.runAction(sequence, completion: {self.updateSpawning()})
         
     }
     func updateScore()
@@ -254,22 +261,24 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         print("pause click")
         pauseBtn.removeFromSuperview()
         createResumeBtn()
-        self.runAction(SKAction.runBlock(self.pauseGame))
+        pauseGame()
+        //self.runAction(SKAction.runBlock(self.pauseGame))
     }
     func pauseGame()
     {
         //scene?.physicsWorld.speed = 0
-        self.view?.paused = true
-        
+        //self.view?.paused = true
+        gameLayer.paused = true
+        isGamePaused = true
+        //self.view?.paused = true
         //scene?.view?.paused = true
     }
     
     func resumeGame()
     {
-        self.view?.paused = false
-        sleep(1)
+        gameLayer.paused = false
+        isGamePaused = false
         numberLbl.removeFromSuperview()
-        //scene?.view?.paused = false
     }
     
     func resumeClick()
@@ -342,18 +351,23 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         /* Called when a touch begins */
         
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let location = touch.locationInNode(gameLayer)
             
-            player.position.x = location.x
+            if(isGamePaused == false)
+            {
+                player.position.x = location.x
+            }
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let location = touch.locationInNode(gameLayer)
             
-            player.position.x = location.x;
-            
+            if(isGamePaused == false)
+            {
+                player.position.x = location.x;
+            }
         }
     }
     
