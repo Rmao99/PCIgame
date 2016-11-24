@@ -165,7 +165,25 @@ class EndScene : SKScene //super class is SKScene
     {
         if(didRestart == false) //incase restart is called multiple times during updates
         {
-            self.view?.presentScene(GamePlayScene(), transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
+            let scene = GamePlayScene(size: view!.bounds.size)
+            
+            // Configure the view.
+            
+            let skView = self.view! as SKView
+            
+            
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+            
+            /* Sprite Kit applies additional optimizations to improve rendering performance */
+            skView.ignoresSiblingOrder = false
+            
+            /* Set the scale mode to scale to fit the window */
+            scene.scaleMode = .ResizeFill
+            
+            scene.size = skView.bounds.size
+            skView.presentScene(scene)
+
             restartBtn.removeFromSuperview()
             linkBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
