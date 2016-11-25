@@ -27,6 +27,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     let splash = SKAction.playSoundFileNamed("Water-splash-sound-effect.mp3", waitForCompletion: false)
     var MULTIPLIER = 1.0
     var scoreMultiplier = 1
+    var BOMB_MULTIPLIER =  1.0
+    
     var isDone = false
     var isGamePaused = false
     // var DropTimer = NSTimer()
@@ -69,7 +71,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         return audioPlayer!
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMoveToView(view: SKView)
+    {
         
         self.addChild(gameLayer)
         
@@ -154,69 +157,70 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(bottom)
         
         //selector: what function it calls every second
-        ////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
         //spawning
-        ////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
         
-   /*     waitBomb = SKAction.waitForDuration(15)
+        waitBomb = SKAction.waitForDuration(15)
         spawnBomb = SKAction.runBlock
-            {
-                let bomb = SKSpriteNode(imageNamed: "bomb.png")
-                bomb.xScale = 0.1
-                bomb.yScale = 0.1
-                let minValue = self.size.width/8
-                let maxValue = self.size.width - 20
+        {
+            let bomb = SKSpriteNode(imageNamed: "bomb.png")
+            bomb.xScale = 0.03
+            bomb.yScale = 0.03
+            let minValue = self.size.width/8
+            let maxValue = self.size.width - 20
                 
-                let spawnPoint = UInt32(maxValue - minValue)
+            let spawnPoint = UInt32(maxValue - minValue)
                 
-                bomb.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
-                bomb.zPosition = 2
-                bomb.physicsBody = SKPhysicsBody(rectangleOfSize: bomb.size)
-                bomb.physicsBody?.categoryBitMask = PhysicsCategory.bomb
-                bomb.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
-                bomb.physicsBody?.usesPreciseCollisionDetection = true
-                //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
-                //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
-                bomb.physicsBody?.affectedByGravity = false
-                bomb.physicsBody?.allowsRotation = false
-                bomb.physicsBody?.dynamic = true
+            bomb.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+            bomb.zPosition = 2
+            bomb.physicsBody = SKPhysicsBody(rectangleOfSize: bomb.size)
+            bomb.physicsBody?.categoryBitMask = PhysicsCategory.bomb
+            bomb.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            bomb.physicsBody?.collisionBitMask = 0
+            bomb.physicsBody?.usesPreciseCollisionDetection = true
+            bomb.physicsBody?.affectedByGravity = false
+            bomb.physicsBody?.allowsRotation = false
+            bomb.physicsBody?.dynamic = true
                 
-                let action = SKAction.moveToY(-70, duration: (10.0))
-                let actionDone = SKAction.removeFromParent()
-                bomb.runAction(SKAction.sequence([action, actionDone]))
+            let action = SKAction.moveToY(-70, duration: (10.0))
+            let actionDone = SKAction.removeFromParent()
+            bomb.runAction(SKAction.sequence([action, actionDone]))
                 
-                self.gameLayer.addChild(bomb)
-        }*/
+            self.gameLayer.addChild(bomb)
+        }
+        sequenceBomb = SKAction.repeatAction(SKAction.sequence([waitBomb, spawnBomb]), count: 10)
+        gameLayer.runAction(sequenceBomb, completion: {self.updateBombSpawning()})
         
         waitX2 = SKAction.waitForDuration(10)
         spawnX2 = SKAction.runBlock
-            {
-                let x2 = SKSpriteNode(imageNamed: "x2-logo.png")
-                x2.xScale = 0.1
-                x2.yScale = 0.1
-                let minValue = self.size.width/8
-                let maxValue = self.size.width - 20
+        {
+            let x2 = SKSpriteNode(imageNamed: "x2-logo.png")
+            x2.xScale = 0.1
+            x2.yScale = 0.1
+            let minValue = self.size.width/8
+            let maxValue = self.size.width - 20
+            
+            let spawnPoint = UInt32(maxValue - minValue)
+            
+            x2.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+            x2.zPosition = 2
+            x2.physicsBody = SKPhysicsBody(rectangleOfSize: x2.size)
+            x2.physicsBody?.categoryBitMask = PhysicsCategory.x2
+            x2.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            x2.physicsBody?.collisionBitMask = 0
+            x2.physicsBody?.usesPreciseCollisionDetection = true
+            //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+            //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
+            x2.physicsBody?.affectedByGravity = false
+            x2.physicsBody?.allowsRotation = false
+            x2.physicsBody?.dynamic = true
                 
-                let spawnPoint = UInt32(maxValue - minValue)
+            let action = SKAction.moveToY(-70, duration: (7.0))
+            let actionDone = SKAction.removeFromParent()
+            x2.runAction(SKAction.sequence([action, actionDone]))
                 
-                x2.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
-                x2.zPosition = 2
-                x2.physicsBody = SKPhysicsBody(rectangleOfSize: x2.size)
-                x2.physicsBody?.categoryBitMask = PhysicsCategory.x2
-                x2.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
-                x2.physicsBody?.collisionBitMask = 0
-                x2.physicsBody?.usesPreciseCollisionDetection = true
-                //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
-                //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
-                x2.physicsBody?.affectedByGravity = false
-                x2.physicsBody?.allowsRotation = false
-                x2.physicsBody?.dynamic = true
-                
-                let action = SKAction.moveToY(-70, duration: (7.0))
-                let actionDone = SKAction.removeFromParent()
-                x2.runAction(SKAction.sequence([action, actionDone]))
-                
-                self.gameLayer.addChild(x2)
+            self.gameLayer.addChild(x2)
         }
         
         sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
@@ -226,32 +230,30 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         wait = SKAction.waitForDuration(MULTIPLIER)
         spawn = SKAction.runBlock
         {
-        var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
-        let minValue = self.size.width/8
-        let maxValue = self.size.width - 20
+            let drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+            let minValue = self.size.width/8
+            let maxValue = self.size.width - 20
         
-        var spawnPoint = UInt32(maxValue - minValue)
+            let spawnPoint = UInt32(maxValue - minValue)
         
-        drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
-        drop.zPosition = 1
-        drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
-        drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
-        drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+            drop.zPosition = 1
+            drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
+            drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
+            drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
             drop.physicsBody?.collisionBitMask = 0
-        drop.physicsBody?.usesPreciseCollisionDetection = true
+            drop.physicsBody?.usesPreciseCollisionDetection = true
         
-        //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
-        //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
-        drop.physicsBody?.affectedByGravity = false
-        drop.physicsBody?.allowsRotation = false
-        drop.physicsBody?.dynamic = true
+            drop.physicsBody?.affectedByGravity = false
+            drop.physicsBody?.allowsRotation = false
+            drop.physicsBody?.dynamic = true
         
-        self.dropArray.append(drop)
-        let action = SKAction.moveToY(-70, duration: (3.0))
-        let actionDone = SKAction.removeFromParent()
-        drop.runAction(SKAction.sequence([action, actionDone]))
-        self.gameLayer.addChild(drop)
-        print(self.dropArray.count)
+            self.dropArray.append(drop)
+            let action = SKAction.moveToY(-70, duration: (3.0))
+            let actionDone = SKAction.removeFromParent()
+            drop.runAction(SKAction.sequence([action, actionDone]))
+            self.gameLayer.addChild(drop)
+            print(self.dropArray.count)
         }
         
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
@@ -270,9 +272,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
     //contact
-    ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
     
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
@@ -299,7 +301,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             firstBody.node?.removeFromParent()
 
         }
-            
         else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
         {
             updateScore();
@@ -324,13 +325,43 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         {
             secondBody.node?.removeFromParent()
         }
+        else if(firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.bomb)
+        {
+            score += dropArray.count * scoreMultiplier
+            for drop in dropArray
+            {
+                let i = dropArray.indexOf(drop)
+                dropArray.removeAtIndex(i!)
+                drop.removeFromParent()
+            }
+            secondBody.node?.removeFromParent()
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.bomb)
+        {
+            secondBody.node?.removeFromParent()
+        }
+   
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////////////
+    //update spawning
+    /////////////////////////////////////////////////////////////////////////
+    
+    func updateBombSpawning()
+    {
+        print("update bomb spawning")
+        BOMB_MULTIPLIER = BOMB_MULTIPLIER * 0.93
+        waitX2 = SKAction.waitForDuration(Double(arc4random_uniform(3) + 15) * BOMB_MULTIPLIER)
+        sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
+        gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
         
     }
+    
     func updateX2Spawning()
     {
         print("update x2 spawning")
-        let random = Double(arc4random_uniform(6) + 10)
-        waitX2 = SKAction.waitForDuration(random)
+        waitX2 = SKAction.waitForDuration(Double(arc4random_uniform(6) + 10))
         sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
         gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
     }

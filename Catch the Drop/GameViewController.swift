@@ -17,7 +17,7 @@ class GameViewController: UIViewController{
         
         super.viewDidLoad()
         
-        let scene = GamePlayScene(size: view.bounds.size)
+        let scene = GameScene(size: view.bounds.size)
             // Configure the view.
         
         
