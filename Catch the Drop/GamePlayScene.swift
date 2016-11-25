@@ -134,20 +134,24 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop //| PhysicsCategory.x2
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2
+        player.physicsBody?.usesPreciseCollisionDetection = true
         //triggers didBeginContact
         player.physicsBody?.dynamic = false
         
         let bottomRect = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, 1)
-        let bottom = SKNode()
+        let bottom = SKSpriteNode()
         bottom.physicsBody = SKPhysicsBody(edgeLoopFromRect: bottomRect)
         bottom.physicsBody!.categoryBitMask = PhysicsCategory.bottom
+        bottom.physicsBody!.contactTestBitMask = PhysicsCategory.x2 | PhysicsCategory.drop
+        bottom.physicsBody!.usesPreciseCollisionDetection = true
+        
         self.addChild(bottom)
         
         //selector: what function it calls every second
-////////////////////////////////////////////
-//spawning
-////////////////////////////////////////////
+        ////////////////////////////////////////////
+        //spawning
+        ////////////////////////////////////////////
         
         waitX2 = SKAction.waitForDuration(x2MULTIPLIER)
         spawnX2 = SKAction.runBlock
@@ -165,6 +169,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 x2.physicsBody = SKPhysicsBody(rectangleOfSize: x2.size)
                 x2.physicsBody?.categoryBitMask = PhysicsCategory.x2
                 x2.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+                x2.physicsBody?.usesPreciseCollisionDetection = true
                 //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
                 //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
                 x2.physicsBody?.affectedByGravity = false
@@ -176,36 +181,39 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 x2.runAction(SKAction.sequence([action, actionDone]))
                 
                 self.gameLayer.addChild(x2)
-            }
+        }
         
         sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
         gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
         
-        //new spawning
+        
         wait = SKAction.waitForDuration(MULTIPLIER)
         spawn = SKAction.runBlock
-            {
-                var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
-                let minValue = self.size.width/8
-                let maxValue = self.size.width - 20
-                
-                var spawnPoint = UInt32(maxValue - minValue)
-                
-                drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
-                drop.zPosition = 1
-                drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
-                drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
-                drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
-                //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
-                //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
-                drop.physicsBody?.affectedByGravity = false
-                drop.physicsBody?.allowsRotation = false
-                drop.physicsBody?.dynamic = true
-                
-                let action = SKAction.moveToY(-70, duration: (3.0))
-                let actionDone = SKAction.removeFromParent()
-                drop.runAction(SKAction.sequence([action, actionDone]))
-                self.gameLayer.addChild(drop)
+        {
+        var drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+        let minValue = self.size.width/8
+        let maxValue = self.size.width - 20
+        
+        var spawnPoint = UInt32(maxValue - minValue)
+        
+        drop.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+        drop.zPosition = 1
+        drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
+        drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
+        drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+        drop.physicsBody?.usesPreciseCollisionDetection = true
+        
+        //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+        //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
+        drop.physicsBody?.affectedByGravity = false
+        drop.physicsBody?.allowsRotation = false
+        drop.physicsBody?.dynamic = true
+        
+        
+        let action = SKAction.moveToY(-70, duration: (3.0))
+        let actionDone = SKAction.removeFromParent()
+        drop.runAction(SKAction.sequence([action, actionDone]))
+        self.gameLayer.addChild(drop)
         }
         
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
@@ -224,83 +232,55 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-////////////////////////////////////////////
-//contact
-////////////////////////////////////////////
+    ////////////////////////////////////////////
+    //contact
+    ////////////////////////////////////////////
     
     func didBeginContact(contact: SKPhysicsContact) {
-        var firstBody : SKPhysicsBody = contact.bodyA //contact is passed from parameter and
-        var secondBody : SKPhysicsBody = contact.bodyB  // A and B is the two objects
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
         
-        print("began contact")
-        print(firstBody.contactTestBitMask)
-        print(secondBody.contactTestBitMask)
-        
-        print("here1")
-        if((firstBody.contactTestBitMask == PhysicsCategory.drop) &&
-            (secondBody.contactTestBitMask == PhysicsCategory.player))
+        if(contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
         {
-            self.runAction(splash)
-            if(firstBody.node != nil && secondBody.node != nil)
-            {
-                collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
-            }
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
         }
-        else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
-            (secondBody.contactTestBitMask == PhysicsCategory.drop))
+        else
         {
-            self.runAction(splash)
-            if(secondBody.node != nil && firstBody.node != nil)
-            {
-                collideWithDrop(firstBody.node as! SKSpriteNode, drop: secondBody.node as! SKSpriteNode)
-            }
-            //firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
         }
         
-        print("here2")
-        if((firstBody.contactTestBitMask == PhysicsCategory.x2) &&
-            (secondBody.contactTestBitMask == PhysicsCategory.player))
+        if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
         {
-            //self.runAction(splash)
-            print("x2")
-            if(firstBody.node != nil && secondBody.node != nil)
-            {
-                X2collideWithPlayer(firstBody.node as! SKSpriteNode, person: secondBody.node as! SKSpriteNode )
-            }
+            firstBody.node?.removeFromParent()
+            score += 1*scoreMultiplier
+            scoreLabel.text = "\(score)"
         }
-        else if((firstBody.contactTestBitMask == PhysicsCategory.player) &&
-            (secondBody.contactTestBitMask == PhysicsCategory.x2))
-        {
-            //self.runAction(splash)
-            print("x2")
-            if(secondBody.node != nil && firstBody.node != nil)
-            {
-                collideWithX2(firstBody.node as! SKSpriteNode, X2: secondBody.node as! SKSpriteNode)
-            }
             
-        }
-        
-        print("here3")
-        if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.x2)
-        {
-            //secondBody.node?.removeFromParent()
-            print("collided")
-        }
-        
-        print("here4")
-        if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.drop)
+        else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
         {
             updateScore();
             
             
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
+            player.removeFromParent()
             soundPlayer.stop()
             pauseBtn.removeFromSuperview()
-            //resumeBtn.removeFromSuperview()
             self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.x2)
+        {
+            secondBody.node?.removeFromParent()
+            scoreMultiplier += 1
+            scoreLabel.text = "\(score)"
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.x2)
+        {
+            secondBody.node?.removeFromParent()
         }
         
     }
@@ -333,58 +313,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             highScoreDefault.setValue(score, forKey: "HighScore")
         }
     }
-    
-    func X2collideWithPlayer(X2: SKSpriteNode, person: SKSpriteNode)
-    {
-        person.removeFromParent()
-        //drop.removeFromParent()
-        print("hiiii1")
-        
-        scoreMultiplier += 1
-        scoreLabel.text = "\(score)"
-        
-        
-    }
-    
-    func collideWithX2(person: SKSpriteNode, X2: SKSpriteNode)
-    {
-        X2.removeFromParent()
-        //person.removeFromParent()
-        print("hiiii2")
-        scoreMultiplier += 1
-        
-        scoreLabel.text =  "\(score)"
-        
-    }
-    
-    func collideWithPlayer(drop: SKSpriteNode, person: SKSpriteNode)
-    {
-        person.removeFromParent()
-        //drop.removeFromParent()
-        
-        
-        score = score + 1*scoreMultiplier
-        print("yo1")
-        print(scoreMultiplier)
-        
-        scoreLabel.text = "\(score)"
-        
-        
-    }
-    
-    func collideWithDrop(person: SKSpriteNode, drop: SKSpriteNode)
-    {
-        drop.removeFromParent()
-        //person.removeFromParent()
-        
-        score = score + 1*scoreMultiplier
-        print("yo2")
-        print(scoreMultiplier)
-        
-        scoreLabel.text =  "\(score)"
-        
-    }
-    
+   
     func pauseClick()
     {
         print("pause click")
