@@ -13,6 +13,7 @@ struct PhysicsCategory{
     static let bottom : UInt32 = 2
     static let player : UInt32 = 3
     static let x2 : UInt32 = 4
+    static let bomb : UInt32 = 5
 }
 
 class GamePlayScene: SKScene, SKPhysicsContactDelegate {
@@ -26,14 +27,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     let splash = SKAction.playSoundFileNamed("Water-splash-sound-effect.mp3", waitForCompletion: false)
     var MULTIPLIER = 1.0
     var scoreMultiplier = 1
-    var x2MULTIPLIER = 10.0
     var isDone = false
     var isGamePaused = false
-    var DropTimer = NSTimer()
+    // var DropTimer = NSTimer()
     
-    var wait : SKAction!
-    var spawn : SKAction!
-    var sequence : SKAction!
+    var dropArray = [SKSpriteNode]()
     
     var pauseBtn : UIButton!
     var resumeBtn: UIButton!
@@ -43,9 +41,16 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     let gameLayer = SKNode()
     let pauseLayer = SKNode()
     
+    var wait : SKAction!
+    var spawn : SKAction!
+    var sequence : SKAction!
     var waitX2 : SKAction!
     var spawnX2 : SKAction!
     var sequenceX2 : SKAction!
+    var waitBomb : SKAction!
+    var spawnBomb : SKAction!
+    var sequenceBomb : SKAction!
+    
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -153,7 +158,37 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //spawning
         ////////////////////////////////////////////
         
-        waitX2 = SKAction.waitForDuration(x2MULTIPLIER)
+   /*     waitBomb = SKAction.waitForDuration(15)
+        spawnBomb = SKAction.runBlock
+            {
+                let bomb = SKSpriteNode(imageNamed: "bomb.png")
+                bomb.xScale = 0.1
+                bomb.yScale = 0.1
+                let minValue = self.size.width/8
+                let maxValue = self.size.width - 20
+                
+                let spawnPoint = UInt32(maxValue - minValue)
+                
+                bomb.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+                bomb.zPosition = 2
+                bomb.physicsBody = SKPhysicsBody(rectangleOfSize: bomb.size)
+                bomb.physicsBody?.categoryBitMask = PhysicsCategory.bomb
+                bomb.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+                bomb.physicsBody?.usesPreciseCollisionDetection = true
+                //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
+                //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
+                bomb.physicsBody?.affectedByGravity = false
+                bomb.physicsBody?.allowsRotation = false
+                bomb.physicsBody?.dynamic = true
+                
+                let action = SKAction.moveToY(-70, duration: (10.0))
+                let actionDone = SKAction.removeFromParent()
+                bomb.runAction(SKAction.sequence([action, actionDone]))
+                
+                self.gameLayer.addChild(bomb)
+        }*/
+        
+        waitX2 = SKAction.waitForDuration(10)
         spawnX2 = SKAction.runBlock
             {
                 let x2 = SKSpriteNode(imageNamed: "x2-logo.png")
@@ -169,6 +204,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 x2.physicsBody = SKPhysicsBody(rectangleOfSize: x2.size)
                 x2.physicsBody?.categoryBitMask = PhysicsCategory.x2
                 x2.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+                x2.physicsBody?.collisionBitMask = 0
                 x2.physicsBody?.usesPreciseCollisionDetection = true
                 //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
                 //drop.physicsBody?.contactTestBitMask = PhysicsCategory.bottom
@@ -201,6 +237,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         drop.physicsBody = SKPhysicsBody(rectangleOfSize: drop.size)
         drop.physicsBody?.categoryBitMask = PhysicsCategory.drop
         drop.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            drop.physicsBody?.collisionBitMask = 0
         drop.physicsBody?.usesPreciseCollisionDetection = true
         
         //^ have to use the |(or for bits) instead of declaring another contacttestbitmask
@@ -209,11 +246,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         drop.physicsBody?.allowsRotation = false
         drop.physicsBody?.dynamic = true
         
-        
+        self.dropArray.append(drop)
         let action = SKAction.moveToY(-70, duration: (3.0))
         let actionDone = SKAction.removeFromParent()
         drop.runAction(SKAction.sequence([action, actionDone]))
         self.gameLayer.addChild(drop)
+        print(self.dropArray.count)
         }
         
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
@@ -253,9 +291,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
         {
-            firstBody.node?.removeFromParent()
             score += 1*scoreMultiplier
             scoreLabel.text = "\(score)"
+            let i = dropArray.indexOf(firstBody.node as! SKSpriteNode)
+            print("removing index \(i)")
+            dropArray.removeAtIndex(i!)
+            firstBody.node?.removeFromParent()
+
         }
             
         else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
@@ -287,7 +329,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     func updateX2Spawning()
     {
         print("update x2 spawning")
-        waitX2 = SKAction.waitForDuration(x2MULTIPLIER)
+        let random = Double(arc4random_uniform(6) + 10)
+        waitX2 = SKAction.waitForDuration(random)
         sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
         gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
     }

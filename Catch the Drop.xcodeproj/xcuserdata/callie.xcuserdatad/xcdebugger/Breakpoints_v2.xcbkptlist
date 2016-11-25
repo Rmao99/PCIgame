@@ -2,4 +2,85 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Catch the Drop/GamePlayScene.swift"
+            timestampString = "501791823.00713"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
+            landmarkName = "updateX2Spawning()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Catch the Drop/GamePlayScene.swift"
+            timestampString = "501791823.00713"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "GamePlayScene"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Catch_the_Drop.GamePlayScene.init (Catch_the_Drop.GamePlayScene.Type)(size : __C.CGSize) -&gt; Catch_the_Drop.GamePlayScene"
+                  moduleName = "Catch the Drop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/callie/Projects/PCIgame/Catch%20the%20Drop/GamePlayScene.swift"
+                  timestampString = "501790584.176957"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "25">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Catch_the_Drop.GamePlayScene.init (Catch_the_Drop.GamePlayScene.Type)() -&gt; Catch_the_Drop.GamePlayScene"
+                  moduleName = "Catch the Drop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/callie/Projects/PCIgame/Catch%20the%20Drop/GamePlayScene.swift"
+                  timestampString = "501790584.177302"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Catch_the_Drop.GamePlayScene.init (Catch_the_Drop.GamePlayScene.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Catch_the_Drop.GamePlayScene&gt;"
+                  moduleName = "Catch the Drop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/callie/Projects/PCIgame/Catch%20the%20Drop/GamePlayScene.swift"
+                  timestampString = "501790584.177706"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
