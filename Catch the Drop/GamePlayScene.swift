@@ -311,7 +311,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             player.removeFromParent()
             soundPlayer.stop()
             pauseBtn.removeFromSuperview()
-            self.view?.presentScene(EndScene())
+            
+            let nextScene = EndScene(size: self.scene!.size)
+            nextScene.scaleMode = SKSceneScaleMode.ResizeFill
+            
+            self.view?.presentScene(nextScene) //transition: SKTransition.
+                
+            //self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
         }
@@ -368,7 +374,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func updateSpawning()
     {
-        MULTIPLIER = MULTIPLIER * 1/////////////////////////////////////////////////////
+        MULTIPLIER = MULTIPLIER * 0.9/////////////////////////////////////////////////////
         wait = SKAction.waitForDuration(MULTIPLIER)
         sequence = SKAction.repeatAction(SKAction.sequence([wait, spawn]), count: 10)
         gameLayer.runAction(sequence, completion: {self.updateSpawning()})

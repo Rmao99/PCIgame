@@ -6,6 +6,14 @@
 //  Copyright © 2016 Project Concern International. All rights reserved.
 //
 
+
+
+/*TODO:
+    change the play button to a literal "play" button
+    gameplay scene: more powerups (increase the size of the person + golden drop) add sound effects
+    app icon
+*/
+
 import Foundation
 import SpriteKit
 import GameKit
@@ -26,21 +34,47 @@ class EndScene : SKScene //super class is SKScene
     override func didMoveToView(view: SKView)
     {
         
+        let viewSize:CGSize = view.bounds.size
+        
+        let BackGround = SKSpriteNode(imageNamed: "gameover1.jpg")
+        BackGround.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2 + 60)
+        BackGround.zPosition = 0
+       // BackGround.xScale = 0.1
+       // BackGround.yScale = 0.1
+        BackGround.size.height = viewSize.height + 100
+        BackGround.size.width = viewSize.width + 100
+        
+        self.addChild(BackGround)
+        
         linkBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
-        linkBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 300)
+        linkBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 410)
         linkBtn.backgroundColor = UIColor.clearColor()
         linkBtn.setTitle("About us", forState: UIControlState.Normal)
+        linkBtn.layer.cornerRadius = 10
         linkBtn.layer.borderWidth = 1
         linkBtn.layer.borderColor = UIColor.blackColor().CGColor
         linkBtn.addTarget(self, action: Selector("hyperlink"), forControlEvents: UIControlEvents.TouchUpInside)
+        linkBtn.addTarget(self, action: Selector("linkBtnClicked"), forControlEvents: UIControlEvents.TouchDown)
+        linkBtn.addTarget(self, action: Selector("linkBtnNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
         self.view?.addSubview(linkBtn)
+        UIView.animateWithDuration(0.7 ,
+            animations: {
+                self.linkBtn.transform = CGAffineTransformMakeScale(0.6,0.6)
+            },
+            completion:{ finish in
+                UIView.animateWithDuration(0.6){
+                    self.linkBtn.transform = CGAffineTransformIdentity
+                }
+                
+        })
+
         
         scene?.backgroundColor = UIColor.cyanColor()
         
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
-        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 180)
+        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2 - 100, y: view.frame.size.width / 2 + 260)
         mainMenuBtn.setTitle("Main Menu", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         mainMenuBtn.backgroundColor = UIColor.clearColor()
         mainMenuBtn.layer.cornerRadius = 10
@@ -64,27 +98,13 @@ class EndScene : SKScene //super class is SKScene
             })
 
         
-        GameOverLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 1.5, height: view.frame.height/2))
-        GameOverLbl.center = CGPoint(x: view.frame.size.width / 2 , y: view.frame.size.width / 7)
-        GameOverLbl.font = GameOverLbl.font.fontWithSize(100)
-        GameOverLbl.text = "GAME"
-        GameOverLbl.textColor = UIColor.redColor()
-        self.view?.addSubview(GameOverLbl)
-        
-        
-        GameOverLbl2 = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 1.5, height: view.frame.height/2))
-        GameOverLbl2.center = CGPoint(x: view.frame.size.width / 2 , y: view.frame.size.width / 7 + 100)
-        GameOverLbl2.font = GameOverLbl2.font.fontWithSize(100)
-        GameOverLbl2.text = "OVER"
-        GameOverLbl2.textColor = UIColor.redColor()
-        self.view?.addSubview(GameOverLbl2)
-        
+  
         restartBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
         restartBtn.backgroundColor = UIColor.clearColor()
         restartBtn.layer.cornerRadius = 10
         restartBtn.layer.borderWidth = 1
         restartBtn.layer.borderColor = UIColor.blackColor().CGColor
-        restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 180)
+        restartBtn.center = CGPoint(x: view.frame.size.width / 2+100, y: view.frame.size.width / 2 + 260)
         restartBtn.setTitle("Restart", forState: UIControlState.Normal) //text says "restart" when nothing is pressed
         restartBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         restartBtn.addTarget(self, action: Selector("restartButtonClicked"), forControlEvents: UIControlEvents.TouchDown)
@@ -105,36 +125,48 @@ class EndScene : SKScene //super class is SKScene
         
         var scoreDefault = NSUserDefaults.standardUserDefaults()
         var score = scoreDefault.valueForKey("Score") as! NSInteger;
-        NSLog("\(score)")
         
-        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3, height: 30))
-        ScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 3 + 90)
+        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 2, height: 30))
+        ScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 4)
         ScoreLbl.text = "Score: \(score)"
-        ScoreLbl.font = ScoreLbl.font.fontWithSize(30)
-        ScoreLbl.textColor = UIColor.whiteColor()
+        ScoreLbl.textColor = UIColor.blackColor()
+        ScoreLbl.font = UIFont(name: "Chalkduster", size: 40)
+
         self.view?.addSubview(ScoreLbl)
         
-       var highScoreDefault = NSUserDefaults.standardUserDefaults()
+        var highScoreDefault = NSUserDefaults.standardUserDefaults()
         var highScore = highScoreDefault.valueForKey("HighScore") as! NSInteger
         
-        HighScoreLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width/3, height: 30))
-        HighScoreLbl.font = HighScoreLbl.font.fontWithSize(20)
-        HighScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 3 + 130)
+        HighScoreLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width/2, height: 30))
+        HighScoreLbl.font = UIFont(name: "Chalkduster", size: 20)
+        HighScoreLbl.textColor = UIColor.blackColor()
+        HighScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 4 + 70)
         
         
         
         
         HighScoreLbl.text = "HighScore: \(highScore)"
-        HighScoreLbl.textColor = UIColor.whiteColor()
         self.view?.addSubview(HighScoreLbl)
         
     }
     
     func hyperlink()
     {
-        let url = NSURL(string: "https://www.pciglobal.org/w4w2016/")
+        let url = NSURL(string: "https://www.pciglobal.org/w4w2017/")
+        // register: let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
+        //donate now
+        //let url = NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")
         
         UIApplication.sharedApplication().openURL(url!)
+    }
+    func linkBtnClicked()
+    {
+        
+        linkBtn.backgroundColor = UIColor.lightGrayColor()
+    }
+    func linkBtnNotClicked()
+    {
+        linkBtn.backgroundColor = UIColor.clearColor()
     }
     
     func MainMenu()
@@ -149,7 +181,7 @@ class EndScene : SKScene //super class is SKScene
     }
     func restartButtonClicked()
     {
-        restartBtn.backgroundColor = UIColor.grayColor()
+        restartBtn.backgroundColor = UIColor.lightGrayColor()
     }
     func mainButtonNotClicked()
     {
@@ -158,7 +190,7 @@ class EndScene : SKScene //super class is SKScene
     
     func mainButtonClicked()
     {
-        mainMenuBtn.backgroundColor = UIColor.grayColor()
+        mainMenuBtn.backgroundColor = UIColor.lightGrayColor()
     }
     
     func Restart()
@@ -187,8 +219,8 @@ class EndScene : SKScene //super class is SKScene
             restartBtn.removeFromSuperview()
             linkBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
-            GameOverLbl.removeFromSuperview()
-            GameOverLbl2.removeFromSuperview()
+        //    GameOverLbl.removeFromSuperview()
+        //    GameOverLbl2.removeFromSuperview()
             HighScoreLbl.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
@@ -204,12 +236,13 @@ class EndScene : SKScene //super class is SKScene
             let nextScene = GameScene(size: self.scene!.size)
             nextScene.scaleMode = SKSceneScaleMode.ResizeFill
             
-            self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3)) //TODO: HUGE ISSUE WITH PRESENTING SCENE
+            self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3))
+            
             restartBtn.removeFromSuperview()
             linkBtn.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
-            GameOverLbl.removeFromSuperview()
-            GameOverLbl2.removeFromSuperview()
+          //  GameOverLbl.removeFromSuperview()
+          //  GameOverLbl2.removeFromSuperview()
             HighScoreLbl.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
