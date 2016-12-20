@@ -90,12 +90,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(BackGround)
         
         numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 4, height: 30))
-        numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
         numberLbl.text = "Paused"
         numberLbl.font = numberLbl.font.fontWithSize(30)
         numberLbl.textColor = UIColor.whiteColor()
         mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
-        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
+        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
         mainMenuBtn.setTitle("Home", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         mainMenuBtn.backgroundColor = UIColor.clearColor()
         mainMenuBtn.layer.cornerRadius = 10
