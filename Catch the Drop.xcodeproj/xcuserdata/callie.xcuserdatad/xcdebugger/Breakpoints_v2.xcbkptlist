@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Catch the Drop/GamePlayScene.swift"
-            timestampString = "503882803.891441"
+            timestampString = "503956252.852579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
             landmarkName = "updateX2Spawning()"
             landmarkType = "5">
          </BreakpointContent>

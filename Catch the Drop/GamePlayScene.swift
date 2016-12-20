@@ -39,6 +39,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var resumeBtn: UIButton!
     
     var numberLbl : UILabel!
+    var mainMenuBtn : UIButton!
     
     let gameLayer = SKNode()
     let pauseLayer = SKNode()
@@ -75,7 +76,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         
         self.addChild(gameLayer)
-        
+        scoreLabel.text = "\(score)"
         
         let viewSize:CGSize = view.bounds.size
         
@@ -88,12 +89,22 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(BackGround)
         
-        numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 3, height: 30))
-        numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
-        numberLbl.text = "Resume in 1s"
+        numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 4, height: 30))
+        numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
+        numberLbl.text = "Paused"
         numberLbl.font = numberLbl.font.fontWithSize(30)
         numberLbl.textColor = UIColor.whiteColor()
-        
+        mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
+        mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
+        mainMenuBtn.setTitle("Home", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
+        mainMenuBtn.backgroundColor = UIColor.clearColor()
+        mainMenuBtn.layer.cornerRadius = 10
+        mainMenuBtn.layer.borderWidth = 1
+        mainMenuBtn.layer.borderColor = UIColor.blackColor().CGColor
+        mainMenuBtn.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+        mainMenuBtn.addTarget(self, action: Selector("mainButtonClicked"), forControlEvents: UIControlEvents.TouchDown)
+        mainMenuBtn.addTarget(self, action: Selector("mainButtonNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
+        mainMenuBtn.addTarget(self, action: Selector("MainMenuRestart"), forControlEvents: UIControlEvents.TouchUpInside) //once the button is released, call a function MainMenuRestart()
         
         /* Setup your scene here */
         player.xScale = 0.1
@@ -333,6 +344,18 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.bomb)
         {
+            if let wnd = self.view
+            {
+                var v = UIView(frame: wnd.bounds)
+                v.backgroundColor = UIColor.whiteColor()
+                v.alpha = 1
+                
+                wnd.addSubview(v)
+                UIView.animateWithDuration(1, animations: {
+                    v.alpha = 0.0
+                    }, completion: {(finished:Bool) in v.removeFromSuperview()
+                })
+            }
             score += dropArray.count * scoreMultiplier
             for drop in dropArray
             {
@@ -340,6 +363,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 dropArray.removeAtIndex(i!)
                 drop.removeFromParent()
             }
+            scoreLabel.text = "\(score)"
             secondBody.node?.removeFromParent()
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.bomb)
@@ -399,6 +423,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         print("pause click")
         pauseBtn.removeFromSuperview()
         createResumeBtn()
+        self.view?.addSubview(numberLbl)
+        self.view?.addSubview(mainMenuBtn);
         pauseGame()
         //self.runAction(SKAction.runBlock(self.pauseGame))
     }
@@ -426,6 +452,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         createPauseBtn()
         resumeGame()
     }
+    
     
     func createPauseBtn()
     {
@@ -459,9 +486,31 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         resumeBtn.addTarget(self, action: Selector("resumeClick"), forControlEvents: UIControlEvents.TouchDown)
         self.view?.addSubview(resumeBtn)
-        self.view?.addSubview(numberLbl)
+    }
+    func mainButtonNotClicked()
+    {
+        mainMenuBtn.backgroundColor = UIColor.clearColor()
     }
     
+    func mainButtonClicked()
+    {
+        mainMenuBtn.backgroundColor = UIColor.lightGrayColor()
+    }
+    func MainMenuRestart()
+    {
+        updateScore()
+        let nextScene = GameScene(size: self.scene!.size)
+        nextScene.scaleMode = SKSceneScaleMode.ResizeFill
+        player.removeFromParent()
+        soundPlayer.stop()
+        numberLbl.removeFromSuperview()
+        resumeBtn.removeFromSuperview()
+        mainMenuBtn.removeFromSuperview()
+        scoreLabel.removeFromSuperview()
+        
+        self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3))
+        
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         

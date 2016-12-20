@@ -37,11 +37,11 @@ class EndScene : SKScene //super class is SKScene
         let viewSize:CGSize = view.bounds.size
         
         let BackGround = SKSpriteNode(imageNamed: "gameover1.jpg")
-        BackGround.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2 + 60)
+        BackGround.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2 + 70)
         BackGround.zPosition = 0
        // BackGround.xScale = 0.1
        // BackGround.yScale = 0.1
-        BackGround.size.height = viewSize.height + 100
+        BackGround.size.height = viewSize.height + 150
         BackGround.size.width = viewSize.width + 100
         
         self.addChild(BackGround)
@@ -126,8 +126,8 @@ class EndScene : SKScene //super class is SKScene
         var scoreDefault = NSUserDefaults.standardUserDefaults()
         var score = scoreDefault.valueForKey("Score") as! NSInteger;
         
-        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 2, height: 30))
-        ScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 4)
+        ScoreLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 2+100, height: 30))
+        ScoreLbl.center = CGPoint(x: view.frame.size.width / 2+50, y: view.frame.size.width / 4)
         ScoreLbl.text = "Score: \(score)"
         ScoreLbl.textColor = UIColor.blackColor()
         ScoreLbl.font = UIFont(name: "Chalkduster", size: 40)
@@ -137,10 +137,10 @@ class EndScene : SKScene //super class is SKScene
         var highScoreDefault = NSUserDefaults.standardUserDefaults()
         var highScore = highScoreDefault.valueForKey("HighScore") as! NSInteger
         
-        HighScoreLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width/2, height: 30))
+        HighScoreLbl = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width/2+100, height: 30))
         HighScoreLbl.font = UIFont(name: "Chalkduster", size: 20)
         HighScoreLbl.textColor = UIColor.blackColor()
-        HighScoreLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 4 + 70)
+        HighScoreLbl.center = CGPoint(x: view.frame.size.width / 2+50, y: view.frame.size.width / 4 + 70)
         
         
         
