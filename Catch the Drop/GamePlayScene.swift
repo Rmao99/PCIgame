@@ -14,6 +14,7 @@ struct PhysicsCategory{
     static let player : UInt32 = 3
     static let x2 : UInt32 = 4
     static let bomb : UInt32 = 5
+    static let enlarge : UInt32 = 6
 }
 
 class GamePlayScene: SKScene, SKPhysicsContactDelegate {
@@ -55,6 +56,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var waitBomb : SKAction!
     var spawnBomb : SKAction!
     var sequenceBomb : SKAction!
+    var waitEnlarge : SKAction!
+    var spawnEnlarge: SKAction!
+    var sequenceEnlarge : SKAction!
     
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
@@ -148,14 +152,14 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var point = CGPointMake(player.position.x, player.position.y)
         var size = CGSize(width: 13, height: 10)
         
-        var physicsBodySize:CGSize = CGSize(width: 10.0, height : 5.0)
+        var physicsBodySize:CGSize = CGSize(width: 35.0, height : 5.0)
         
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 0.0))
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 10.0))
         
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2 | PhysicsCategory.enlarge
         player.physicsBody?.usesPreciseCollisionDetection = true
         //triggers didBeginContact
         player.physicsBody?.dynamic = false
@@ -164,7 +168,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         let bottom = SKSpriteNode()
         bottom.physicsBody = SKPhysicsBody(edgeLoopFromRect: bottomRect)
         bottom.physicsBody!.categoryBitMask = PhysicsCategory.bottom
-        bottom.physicsBody!.contactTestBitMask = PhysicsCategory.x2 | PhysicsCategory.drop
+        bottom.physicsBody!.contactTestBitMask = PhysicsCategory.x2 | PhysicsCategory.drop | PhysicsCategory.enlarge
         bottom.physicsBody!.usesPreciseCollisionDetection = true
         
         self.addChild(bottom)
@@ -173,6 +177,39 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         /////////////////////////////////////////////////////////////////////////
         //spawning
         /////////////////////////////////////////////////////////////////////////
+        waitEnlarge = SKAction.waitForDuration((Double(arc4random_uniform(5) + 15)))
+        spawnEnlarge = SKAction.runBlock
+        {
+            let enlarge = SKSpriteNode(imageNamed: "enlarge.png")
+            enlarge.xScale = 0.2
+            enlarge.yScale = 0.2
+            let minValue = self.size.width/8
+            let maxValue = self.size.width - 20
+            
+            let spawnPoint = UInt32(maxValue - minValue)
+            
+            enlarge.position = CGPoint(x: CGFloat(arc4random_uniform(spawnPoint)), y: self.size.height)
+            enlarge.zPosition = 2
+            enlarge.physicsBody = SKPhysicsBody(rectangleOfSize: enlarge.size)
+            enlarge.physicsBody?.categoryBitMask = PhysicsCategory.enlarge
+            enlarge.physicsBody?.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.bottom
+            enlarge.physicsBody?.collisionBitMask = 0
+            enlarge.physicsBody?.usesPreciseCollisionDetection = true
+            enlarge.physicsBody?.affectedByGravity = false
+            enlarge.physicsBody?.allowsRotation = false
+            enlarge.physicsBody?.dynamic = true
+            
+            let action = SKAction.moveToY(-70, duration: (10.0))
+            let actionDone = SKAction.removeFromParent()
+            enlarge.runAction(SKAction.sequence([action, actionDone]))
+            
+            self.gameLayer.addChild(enlarge)
+        }
+        sequenceEnlarge = SKAction.repeatAction(SKAction.sequence([waitEnlarge, spawnEnlarge]), count: 1)
+        gameLayer.runAction(sequenceEnlarge, completion: {self.updateEnlargeSpawning()})
+        
+
+        
         
         waitBomb = SKAction.waitForDuration(15)
         spawnBomb = SKAction.runBlock
@@ -195,14 +232,14 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             bomb.physicsBody?.affectedByGravity = false
             bomb.physicsBody?.allowsRotation = false
             bomb.physicsBody?.dynamic = true
-                
+            
             let action = SKAction.moveToY(-70, duration: (10.0))
             let actionDone = SKAction.removeFromParent()
             bomb.runAction(SKAction.sequence([action, actionDone]))
                 
             self.gameLayer.addChild(bomb)
         }
-        sequenceBomb = SKAction.repeatAction(SKAction.sequence([waitBomb, spawnBomb]), count: 10)
+        sequenceBomb = SKAction.repeatAction(SKAction.sequence([waitBomb, spawnBomb]), count: 1)
         gameLayer.runAction(sequenceBomb, completion: {self.updateBombSpawning()})
         
         waitX2 = SKAction.waitForDuration(10)
@@ -247,7 +284,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             var drop = SKSpriteNode()
             if(self.isGolden == false && i == 9)
             {
-                drop = SKSpriteNode(imageNamed: "wuterdrip2.png")
+                drop = SKSpriteNode(imageNamed: "wuterdrip4.png")
                 drop.name = "golden"
                 self.isGolden = true
             }
@@ -317,7 +354,59 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
+        if(firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.enlarge)
+        {
+            secondBody.node?.removeFromParent()
+            
+            let dur = SKAction.waitForDuration(5)
+            let action = SKAction.runBlock
+                {
+                    self.player.xScale = 0.2
+                    self.player.yScale = 0.2
+                    var physicsBodySize:CGSize = CGSize(width: 65.0, height : 15.0)
+
+                    self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x: -25.0, y:10.0))
+                    self.player.physicsBody?.affectedByGravity = false
+                    self.player.physicsBody?.categoryBitMask = PhysicsCategory.player
+                    self.player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2 | PhysicsCategory.enlarge
+                    self.player.physicsBody?.usesPreciseCollisionDetection = true
+                    //triggers didBeginContact
+                    self.player.physicsBody?.dynamic = false
+
+            }
+            let sequence = SKAction.sequence([action,dur])
+            
+            //SKAction.repeatAction(SKAction.sequence([dur, action]), count: 1)
+            gameLayer.runAction(sequence, completion:
+                { var physicsBodySize:CGSize = CGSize(width: 35.0, height : 5.0)
+                
+                self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 10.0))
+                self.player.xScale = 0.1
+                self.player.yScale = 0.1
+                //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
+                self.player.physicsBody?.affectedByGravity = false
+                self.player.physicsBody?.categoryBitMask = PhysicsCategory.player
+                self.player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2 | PhysicsCategory.enlarge
+                self.player.physicsBody?.usesPreciseCollisionDetection = true
+                //triggers didBeginContact
+                self.player.physicsBody?.dynamic = false})
+
+
+         /*   let action = SKAction.runBlock
+                {
+                    //SKAction.scaleBy(2, duration: 4)
+                    //firstBody.node?.run
+                }
+            let actionComp = SKAction.scaleBy(0.5, duration: 4)
+            //firstBody.node?.physicsBody =*/
+           // firstBody.node?.runAction(action)
+            
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.enlarge)
+        {
+            secondBody.node?.removeFromParent()
+        }
+        else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
         {
             if(firstBody.node?.name == "golden")
             {
@@ -412,13 +501,21 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     //update spawning
     /////////////////////////////////////////////////////////////////////////
     
+    func updateEnlargeSpawning()
+    {
+        waitEnlarge = SKAction.waitForDuration((Double(arc4random_uniform(5) + 15)))
+        sequenceEnlarge = SKAction.repeatAction(SKAction.sequence([waitEnlarge,spawnEnlarge]), count: 1)
+        gameLayer.runAction(sequenceEnlarge, completion: {self.updateEnlargeSpawning()})
+
+    }
+    
     func updateBombSpawning()
     {
         print("update bomb spawning")
         BOMB_MULTIPLIER = BOMB_MULTIPLIER * 0.93
-        waitX2 = SKAction.waitForDuration(Double(arc4random_uniform(4) + 15) * BOMB_MULTIPLIER)
-        sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
-        gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
+        waitBomb = SKAction.waitForDuration(Double(arc4random_uniform(4) + 15) * BOMB_MULTIPLIER)
+        sequenceBomb = SKAction.repeatAction(SKAction.sequence([waitBomb,spawnBomb]), count: 1)
+        gameLayer.runAction(sequenceBomb, completion: {self.updateBombSpawning()})
         
     }
     
