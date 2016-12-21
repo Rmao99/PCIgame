@@ -98,6 +98,24 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(BackGround)
         
+        unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        unmuteBtn.frame = CGRectMake(50,50,50,50)
+        unmuteBtn.setImage(UIImage(named: "unmute.png") as UIImage?, forState: .Normal)
+        unmuteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        unmuteBtn.layer.borderWidth = 1
+        unmuteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        unmuteBtn.addTarget(self, action: Selector("unmuteClick"), forControlEvents: UIControlEvents.TouchDown)
+        self.view?.addSubview(unmuteBtn);
+        muteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        muteBtn.frame = CGRectMake(50,50,50,50)
+        muteBtn.setImage(UIImage(named: "mute.png") as UIImage?, forState: .Normal)
+        muteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        muteBtn.layer.borderWidth = 1
+        muteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        muteBtn.addTarget(self, action: Selector("muteClick"), forControlEvents: UIControlEvents.TouchDown)
+        
         numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 4, height: 30))
         numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
         numberLbl.text = "Paused"
@@ -439,6 +457,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             player.removeFromParent()
             soundPlayer.stop()
             pauseBtn.removeFromSuperview()
+            muteBtn.removeFromSuperview()
+            unmuteBtn.removeFromSuperview()
             
             let nextScene = EndScene(size: self.scene!.size)
             nextScene.scaleMode = SKSceneScaleMode.ResizeFill
@@ -551,7 +571,22 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             highScoreDefault.setValue(score, forKey: "HighScore")
         }
     }
+    
+    //clicks
    
+    func unmuteClick()
+    {
+        soundPlayer.volume = 0;
+        unmuteBtn.removeFromSuperview()
+        self.view?.addSubview(muteBtn)
+    }
+    
+    func muteClick()
+    {
+        soundPlayer.volume = 0.3
+        muteBtn.removeFromSuperview()
+        self.view?.addSubview(unmuteBtn)
+    }
     func pauseClick()
     {
         print("pause click")
@@ -591,7 +626,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func createPauseBtn()
     {
-        print("create pause btn")
         pauseBtn = UIButton(type: UIButtonType.Custom) as UIButton
         pauseBtn.frame = CGRectMake(50,50,50,50)
         pauseBtn.setImage(UIImage(named: "pause.jpe") as UIImage?, forState: .Normal)
@@ -642,6 +676,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         resumeBtn.removeFromSuperview()
         mainMenuBtn.removeFromSuperview()
         scoreLabel.removeFromSuperview()
+        muteBtn.removeFromSuperview()
+        unmuteBtn.removeFromSuperview()
         
         self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3))
         

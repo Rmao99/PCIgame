@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Catch the Drop/GamePlayScene.swift"
-            timestampString = "504045177.851726"
+            timestampString = "504050040.799057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
             landmarkName = "updateX2Spawning()"
             landmarkType = "5">
          </BreakpointContent>
@@ -105,11 +105,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Catch the Drop/GamePlayScene.swift"
-            timestampString = "504037001.945204"
+            timestampString = "504050040.799057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -121,11 +121,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Catch the Drop/GamePlayScene.swift"
-            timestampString = "504037001.945204"
+            timestampString = "504050040.799057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>
