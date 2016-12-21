@@ -31,6 +31,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     var isDone = false
     var isGamePaused = false
+    
+    var isGolden = false
     // var DropTimer = NSTimer()
     
     var dropArray = [SKSpriteNode]()
@@ -241,7 +243,20 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         wait = SKAction.waitForDuration(MULTIPLIER)
         spawn = SKAction.runBlock
         {
-            let drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+            let i = arc4random_uniform(15)
+            var drop = SKSpriteNode()
+            if(self.isGolden == false && i == 9)
+            {
+                drop = SKSpriteNode(imageNamed: "wuterdrip2.png")
+                drop.name = "golden"
+                self.isGolden = true
+            }
+            else
+            {
+                drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+                drop.name = "normal"
+            }
+            
             let minValue = self.size.width/8
             let maxValue = self.size.width - 20
         
@@ -304,8 +319,18 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
         {
-            score += 1*scoreMultiplier
+            if(firstBody.node?.name == "golden")
+            {
+                score += 3*scoreMultiplier
+                isGolden = false
+            }
+            else
+            {
+                score += 1*scoreMultiplier
+            }
+            
             scoreLabel.text = "\(score)"
+            
             let i = dropArray.indexOf(firstBody.node as! SKSpriteNode)
             print("removing index \(i)")
             dropArray.removeAtIndex(i!)
@@ -356,7 +381,16 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                     }, completion: {(finished:Bool) in v.removeFromSuperview()
                 })
             }
-            score += dropArray.count * scoreMultiplier
+            if(isGolden == false)
+            {
+                score += dropArray.count * scoreMultiplier
+            }
+            if(isGolden == true)
+            {
+                score += (dropArray.count+2) * scoreMultiplier
+                isGolden = false
+            }
+            
             for drop in dropArray
             {
                 let i = dropArray.indexOf(drop)
@@ -382,7 +416,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         print("update bomb spawning")
         BOMB_MULTIPLIER = BOMB_MULTIPLIER * 0.93
-        waitX2 = SKAction.waitForDuration(Double(arc4random_uniform(3) + 15) * BOMB_MULTIPLIER)
+        waitX2 = SKAction.waitForDuration(Double(arc4random_uniform(4) + 15) * BOMB_MULTIPLIER)
         sequenceX2 = SKAction.repeatAction(SKAction.sequence([waitX2,spawnX2]), count: 1)
         gameLayer.runAction(sequenceX2, completion: {self.updateX2Spawning()})
         
@@ -449,6 +483,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         print("resume click")
         resumeBtn.removeFromSuperview()
+        mainMenuBtn.removeFromSuperview()
         createPauseBtn()
         resumeGame()
     }
