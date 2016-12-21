@@ -41,6 +41,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var pauseBtn : UIButton!
     var resumeBtn: UIButton!
     
+    var muteBtn : UIButton!
+    var unmuteBtn : UIButton!
+    
     var numberLbl : UILabel!
     var mainMenuBtn : UIButton!
     
@@ -177,7 +180,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         /////////////////////////////////////////////////////////////////////////
         //spawning
         /////////////////////////////////////////////////////////////////////////
-        waitEnlarge = SKAction.waitForDuration((Double(arc4random_uniform(5) + 15)))
+        waitEnlarge = SKAction.waitForDuration((Double(arc4random_uniform(6) + 18)))
         spawnEnlarge = SKAction.runBlock
         {
             let enlarge = SKSpriteNode(imageNamed: "enlarge.png")
@@ -199,7 +202,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             enlarge.physicsBody?.allowsRotation = false
             enlarge.physicsBody?.dynamic = true
             
-            let action = SKAction.moveToY(-70, duration: (10.0))
+            let action = SKAction.moveToY(-70, duration: (13.0))
             let actionDone = SKAction.removeFromParent()
             enlarge.runAction(SKAction.sequence([action, actionDone]))
             
@@ -312,7 +315,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             drop.physicsBody?.dynamic = true
         
             self.dropArray.append(drop)
-            let action = SKAction.moveToY(-70, duration: (3.0))
+            let action = SKAction.moveToY(-70, duration: (3.2))
             let actionDone = SKAction.removeFromParent()
             drop.runAction(SKAction.sequence([action, actionDone]))
             self.gameLayer.addChild(drop)
@@ -590,12 +593,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         print("create pause btn")
         pauseBtn = UIButton(type: UIButtonType.Custom) as UIButton
-        pauseBtn.frame = CGRectMake(100,100,100,100)
+        pauseBtn.frame = CGRectMake(50,50,50,50)
         pauseBtn.setImage(UIImage(named: "pause.jpe") as UIImage?, forState: .Normal)
-        pauseBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 40)
+        pauseBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 25)
         //pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         //pauseBtn.backgroundColor = UIColor.clearColor()
-        pauseBtn.layer.cornerRadius = 10
+        //pauseBtn.layer.cornerRadius = 10
         pauseBtn.layer.borderWidth = 1
         pauseBtn.layer.borderColor = UIColor.blackColor().CGColor
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -607,12 +610,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         print("create resume btn")
         resumeBtn = UIButton(type: UIButtonType.Custom) as UIButton
-        resumeBtn.frame = CGRectMake(100,100,100,100)
+        resumeBtn.frame = CGRectMake(50,50,50,50)
         resumeBtn.setImage(UIImage(named: "play.png") as UIImage?, forState: .Normal)
-        resumeBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 40)
+        resumeBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 25)
         //pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         //pauseBtn.backgroundColor = UIColor.clearColor()
-        resumeBtn.layer.cornerRadius = 10
+        //resumeBtn.layer.cornerRadius = 10
         resumeBtn.layer.borderWidth = 1
         resumeBtn.layer.borderColor = UIColor.blackColor().CGColor
         //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
