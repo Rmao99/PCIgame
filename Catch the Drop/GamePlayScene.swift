@@ -23,9 +23,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode(imageNamed: "walk 4 water (3).png")
     var score = 0
     var scoreLabel = UILabel()
+    
     var soundPlayer = AVAudioPlayer()
-    //var splash = AVAudioPlayer()
-    let splash = SKAction.playSoundFileNamed("Water-splash-sound-effect.mp3", waitForCompletion: false)
+    var backgroundPlayer = AVAudioPlayer()
+    var splash = AVAudioPlayer()
+    
     var MULTIPLIER = 1.0
     var scoreMultiplier = 1
     var BOMB_MULTIPLIER =  1.0
@@ -35,6 +37,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     var isGolden = false
     // var DropTimer = NSTimer()
+    var muted = false
     
     var dropArray = [SKSpriteNode]()
     
@@ -138,14 +141,25 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         player.yScale = 0.1
         player.zPosition = 1
         
-        let backgroundMusic = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
-        soundPlayer = backgroundMusic
+        
+/////////////////////////////////////////////////////////////////////////
+//AUDIO
+/////////////////////////////////////////////////////////////////////////
+
+        let backgroundSound = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
+        soundPlayer = backgroundSound
         soundPlayer.volume = 0.3
         soundPlayer.numberOfLoops = -1
         soundPlayer.play();
         
-        //       let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
-        //       splash = splashSound;
+        let backgroundMusic = self.setupAudioPlayerWithFile("Ducky Duck", type: "mp3")
+        backgroundPlayer = backgroundMusic
+        backgroundPlayer.volume = 0.3
+        backgroundPlayer.numberOfLoops = -1
+        backgroundPlayer.play()
+        
+        let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
+        splash = splashSound;
         
         var highScoreDefault = NSUserDefaults.standardUserDefaults()
         
@@ -451,11 +465,16 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         {
             updateScore();
             
+            if(muted == false)
+            {
+                splash.play()
+            }
             
             secondBody.node?.removeFromParent()
             firstBody.node?.removeFromParent()
             player.removeFromParent()
             soundPlayer.stop()
+            backgroundPlayer.stop()
             pauseBtn.removeFromSuperview()
             muteBtn.removeFromSuperview()
             unmuteBtn.removeFromSuperview()
@@ -576,14 +595,18 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
    
     func unmuteClick()
     {
+        muted = true
         soundPlayer.volume = 0;
+        backgroundPlayer.volume = 0
         unmuteBtn.removeFromSuperview()
         self.view?.addSubview(muteBtn)
     }
     
     func muteClick()
     {
+        muted = false
         soundPlayer.volume = 0.3
+        backgroundPlayer.volume = 0.3
         muteBtn.removeFromSuperview()
         self.view?.addSubview(unmuteBtn)
     }
@@ -672,6 +695,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         nextScene.scaleMode = SKSceneScaleMode.ResizeFill
         player.removeFromParent()
         soundPlayer.stop()
+        backgroundPlayer.stop()
         numberLbl.removeFromSuperview()
         resumeBtn.removeFromSuperview()
         mainMenuBtn.removeFromSuperview()
