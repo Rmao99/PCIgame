@@ -187,9 +187,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         var point = CGPointMake(player.position.x, player.position.y)
         var size = CGSize(width: 13, height: 10)
         
-        var physicsBodySize:CGSize = CGSize(width: 35.0, height : 5.0)
+        var physicsBodySize:CGSize = CGSize(width: 45.0, height : 5.0)
         
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 10.0))
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -13.0, y: 10.0))
         
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
@@ -319,13 +319,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             var drop = SKSpriteNode()
             if(self.isGolden == false && i == 9)
             {
-                drop = SKSpriteNode(imageNamed: "wuterdrip4.png")
+                drop = SKSpriteNode(imageNamed: "wuterdrip6.png")
                 drop.name = "golden"
                 self.isGolden = true
             }
             else
             {
-                drop = SKSpriteNode(imageNamed: "wuterdrip.png")
+                drop = SKSpriteNode(imageNamed: "wuterdrip5.png")
                 drop.name = "normal"
             }
             
@@ -398,9 +398,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
                 {
                     self.player.xScale = 0.2
                     self.player.yScale = 0.2
-                    var physicsBodySize:CGSize = CGSize(width: 65.0, height : 15.0)
+                    var physicsBodySize:CGSize = CGSize(width: 75.0, height : 20.0)
 
-                    self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x: -25.0, y:10.0))
+                    self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x: -25.0, y:15.0))
                     self.player.physicsBody?.affectedByGravity = false
                     self.player.physicsBody?.categoryBitMask = PhysicsCategory.player
                     self.player.physicsBody?.contactTestBitMask = PhysicsCategory.drop | PhysicsCategory.x2 | PhysicsCategory.enlarge
@@ -413,9 +413,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             
             //SKAction.repeatAction(SKAction.sequence([dur, action]), count: 1)
             gameLayer.runAction(sequence, completion:
-                { var physicsBodySize:CGSize = CGSize(width: 35.0, height : 5.0)
+                { var physicsBodySize:CGSize = CGSize(width: 45.0, height : 5.0)
                 
-                self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -10.0, y: 10.0))
+                self.player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -13.0, y: 10.0))
                 self.player.xScale = 0.1
                 self.player.yScale = 0.1
                 //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
