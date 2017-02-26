@@ -17,6 +17,7 @@
 import Foundation
 import SpriteKit
 import GameKit
+import AVFoundation
 
 
 class EndScene : SKScene //super class is SKScene
@@ -35,6 +36,26 @@ class EndScene : SKScene //super class is SKScene
     
     var didRestart = false;
     var didMainRestart = false;
+    
+    var backgroundPlayer = AVAudioPlayer()
+    
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
+        
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
+        let url = NSURL.fileURLWithPath(path!) //converts to url
+        
+        var audioPlayer:AVAudioPlayer? //optional AVAudioPlayer incase it isn't created
+        
+        do{
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        }
+        catch{
+            print("Player not available")
+        }
+        
+        return audioPlayer!
+    }
+
     override func didMoveToView(view: SKView)
     {
         
@@ -72,9 +93,23 @@ class EndScene : SKScene //super class is SKScene
                 
         })
         
-        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        let mutedDefault = NSUserDefaults.standardUserDefaults()
         muted = mutedDefault.valueForKey("Mute") as! Bool
         
+        
+        let backgroundSound = self.setupAudioPlayerWithFile("gameoversoud", type: "wav")
+        backgroundPlayer = backgroundSound
+        if(muted == false)
+        {
+            backgroundPlayer.volume = 0.3
+        }
+        else
+        {
+            backgroundPlayer.volume = 0
+        }
+        backgroundPlayer.numberOfLoops = -1
+        backgroundPlayer.play()
+      
         unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
         unmuteBtn.frame = CGRectMake(50,50,50,50)
         unmuteBtn.setImage(UIImage(named: "unmute") as UIImage?, forState: .Normal)
@@ -278,6 +313,29 @@ class EndScene : SKScene //super class is SKScene
             //
         }
     }
+    
+    func unmuteClick()
+    {
+        let mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(true, forKey: "Mute")
+        muted = true;
+        backgroundPlayer.volume = 0;
+        backgroundPlayer.volume = 0
+        unmuteBtn.removeFromSuperview()
+        self.view?.addSubview(muteBtn)
+    }
+    
+    func muteClick()
+    {
+        let mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(false, forKey: "Mute")
+        muted = false
+        backgroundPlayer.volume = 0.3
+        backgroundPlayer.volume = 0.3
+        muteBtn.removeFromSuperview()
+        self.view?.addSubview(unmuteBtn)
+    }
+
     
     
 }

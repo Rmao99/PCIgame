@@ -10,7 +10,8 @@ import SpriteKit
 
 class GameScene : SKScene
 {
-    var playBtn: SKNode! = nil
+ //   var playBtn: SKNode! = nil
+    var playBtnTest : UIButton!
     var linkBtn: UIButton!
     var registerBtn: UIButton!
     var donateBtn: UIButton!
@@ -33,12 +34,24 @@ class GameScene : SKScene
         myLabel.position = CGPoint(x: viewSize.width/2, y: viewSize.height * 0.8)
         myLabel.zPosition = 1
         
-        playBtn = SKSpriteNode(imageNamed: "playBtn")
+       /* playBtn = SKSpriteNode(imageNamed: "playBtn")
         playBtn.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2+100)
         playBtn.name = "playBtn"
-        playBtn.zPosition = 1
+        playBtn.zPosition = 1*/
         
-        
+        let img = UIImage(named: "playBtn")
+        playBtnTest = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        playBtnTest.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.height / 2 - 100)
+        playBtnTest.backgroundColor = UIColor.clearColor()
+        playBtnTest.layer.cornerRadius = 0.5 * playBtnTest.bounds.size.width
+        playBtnTest.layer.borderColor = UIColor.blackColor().CGColor
+        playBtnTest.clipsToBounds = true
+        playBtnTest.setImage(UIImage(named: "playBtn"), forState: UIControlState.Normal)
+        playBtnTest.addTarget(self, action: Selector("playBtnClicked"), forControlEvents: UIControlEvents.TouchDown)
+        playBtnTest.addTarget(self, action: Selector("playBtn"), forControlEvents: UIControlEvents.TouchUpInside)
+        playBtnTest.addTarget(self, action: Selector("playBtnNotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
+        view.addSubview(playBtnTest)
+                
         linkBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
         linkBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 200)
         linkBtn.backgroundColor = UIColor.clearColor()
@@ -113,7 +126,7 @@ class GameScene : SKScene
         
         self.addChild(myLabel)
         self.addChild(BG)
-        self.addChild(playBtn)
+        //self.addChild(playBtn)
     }
     
     func hyperlink1()
@@ -170,6 +183,44 @@ class GameScene : SKScene
         donateBtn.backgroundColor = UIColor.clearColor()
     }
     
+    func playBtnClicked()
+    {
+        playBtnTest.backgroundColor = UIColor.lightGrayColor()
+    }
+    
+    func playBtnNotClicked()
+    {
+        playBtnTest.backgroundColor = UIColor.clearColor()
+    }
+    
+    func playBtn()
+    {
+        donateBtn.removeFromSuperview()
+        linkBtn.removeFromSuperview()
+        registerBtn.removeFromSuperview()
+        playBtnTest.removeFromSuperview()
+        
+        let scene = GamePlayScene(size: view!.bounds.size)
+        
+        // Configure the view.
+        
+        let skView = self.view! as SKView
+        
+        
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.showsPhysics = true
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = false
+        
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .ResizeFill
+        
+        scene.size = skView.bounds.size
+        skView.presentScene(scene)
+        //self.view?.presentScene(scene)
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         for touch: AnyObject in touches{
@@ -177,7 +228,7 @@ class GameScene : SKScene
             
             //let node:SKNode = self.nodeAtPoint(location)
             
-            if(playBtn.containsPoint(location))
+        /*    if(playBtn.containsPoint(location))
             {
                 donateBtn.removeFromSuperview()
                 linkBtn.removeFromSuperview()
@@ -202,7 +253,7 @@ class GameScene : SKScene
                 scene.size = skView.bounds.size
                 skView.presentScene(scene)
                 //self.view?.presentScene(scene)
-            }
+            }*/
         }
     }
 }
