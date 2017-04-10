@@ -31,6 +31,7 @@ class EndScene : SKScene //super class is SKScene
     var GameOverLbl2 : UILabel!
     var mainMenuBtn : UIButton!
     var linkBtn : UIButton!
+    
     var muteBtn : UIButton!
     var unmuteBtn : UIButton!
     
@@ -329,6 +330,14 @@ class EndScene : SKScene //super class is SKScene
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
             didMainRestart = true;
+            if(muted == false)
+            {
+                unmuteBtn.removeFromSuperview()
+            }
+            else
+            {
+                muteBtn.removeFromSuperview()
+            }
             //
         }
     }

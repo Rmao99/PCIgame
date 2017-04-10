@@ -207,6 +207,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
         splash = splashSound;
+        splash.volume = 1.0
+        
         let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
         click = clickSound
         
@@ -286,9 +288,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         waitBomb = SKAction.waitForDuration(15)
         spawnBomb = SKAction.runBlock
         {
-            let bomb = SKSpriteNode(imageNamed: "bomb.png")
-            bomb.xScale = 0.03
-            bomb.yScale = 0.03
+            let bomb = SKSpriteNode(imageNamed: "explosion")
+            bomb.xScale = 0.09
+            bomb.yScale = 0.09
             let minValue = self.size.width/8
             let maxValue = self.size.width - 20
                 
@@ -317,9 +319,9 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         waitX2 = SKAction.waitForDuration(10)
         spawnX2 = SKAction.runBlock
         {
-            let x2 = SKSpriteNode(imageNamed: "x2-logo.png")
-            x2.xScale = 0.1
-            x2.yScale = 0.1
+            let x2 = SKSpriteNode(imageNamed: "plusOne")
+            x2.xScale = 0.275
+            x2.yScale = 0.275
             let minValue = self.size.width/8
             let maxValue = self.size.width - 20
             
@@ -632,11 +634,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
    
     func unmuteClick()
     {
-        if(muted == false)
-        {
-            click.play()
-        }
-        
         var mutedDefault = NSUserDefaults.standardUserDefaults()
         mutedDefault.setBool(true, forKey: "Mute")
         muted = true;
@@ -648,10 +645,6 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func muteClick()
     {
-        if(muted == false)
-        {
-            click.play()
-        }
         var mutedDefault = NSUserDefaults.standardUserDefaults()
         mutedDefault.setBool(false, forKey: "Mute")
         muted = false

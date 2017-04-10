@@ -19,6 +19,8 @@ class GameScene : SKScene
     
     var click = AVAudioPlayer()
     
+    var muteBtn : UIButton!
+    var unmuteBtn : UIButton!
     var muted = Bool()
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
@@ -51,9 +53,37 @@ class GameScene : SKScene
             muted = mutedDefault.valueForKey("Mute") as! Bool
         }
         
+        unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        unmuteBtn.frame = CGRectMake(50,50,50,50)
+        unmuteBtn.setImage(UIImage(named: "unmute") as UIImage?, forState: .Normal)
+        unmuteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        unmuteBtn.layer.borderWidth = 1
+        unmuteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        unmuteBtn.addTarget(self, action: Selector("unmuteClick"), forControlEvents: UIControlEvents.TouchDown)
+        if(muted == false)
+        {
+            self.view?.addSubview(unmuteBtn);
+        }
+        
+        muteBtn = UIButton(type: UIButtonType.Custom) as UIButton
+        muteBtn.frame = CGRectMake(50,50,50,50)
+        muteBtn.setImage(UIImage(named: "mute") as UIImage?, forState: .Normal)
+        muteBtn.center = CGPoint(x: view.frame.size.width - 50 , y: 25)
+        muteBtn.layer.borderWidth = 1
+        muteBtn.layer.borderColor = UIColor.blackColor().CGColor
+        //pauseBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        muteBtn.addTarget(self, action: Selector("muteClick"), forControlEvents: UIControlEvents.TouchDown)
+        if(muted == true)
+        {
+            self.view?.addSubview(muteBtn);
+        }
+        
         let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
         click = clickSound
         click.volume = 1.0
+        
+        
         
         let viewSize:CGSize = view.bounds.size
         
@@ -256,6 +286,14 @@ class GameScene : SKScene
         linkBtn.removeFromSuperview()
         registerBtn.removeFromSuperview()
         playBtnTest.removeFromSuperview()
+        if(muted == false)
+        {
+            unmuteBtn.removeFromSuperview()
+        }
+        else
+        {
+            muteBtn.removeFromSuperview()
+        }
         
         let scene = GamePlayScene(size: view!.bounds.size)
         
@@ -276,6 +314,24 @@ class GameScene : SKScene
         scene.size = skView.bounds.size
         skView.presentScene(scene)
         //self.view?.presentScene(scene)
+    }
+    
+    func unmuteClick()
+    {
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(true, forKey: "Mute")
+        muted = true;
+        unmuteBtn.removeFromSuperview()
+        self.view?.addSubview(muteBtn)
+    }
+    
+    func muteClick()
+    {
+        var mutedDefault = NSUserDefaults.standardUserDefaults()
+        mutedDefault.setBool(false, forKey: "Mute")
+        muted = false
+        muteBtn.removeFromSuperview()
+        self.view?.addSubview(unmuteBtn)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

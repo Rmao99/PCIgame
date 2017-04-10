@@ -37,6 +37,10 @@
 		23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */; };
 		23E492AB1E9B3B8E00EEC655 /* buttonpresssound2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492A91E9B3B8E00EEC655 /* buttonpresssound2.wav */; };
 		23E492AC1E9B3B8E00EEC655 /* gameoversoud2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AA1E9B3B8E00EEC655 /* gameoversoud2.wav */; };
+		23E492AF1E9B5A4F00EEC655 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AD1E9B5A4F00EEC655 /* explosion.png */; };
+		23E492B01E9B5A4F00EEC655 /* plusOne.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AE1E9B5A4F00EEC655 /* plusOne.png */; };
+		23E492B21E9B5A8C00EEC655 /* appicon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 23E492B11E9B5A8C00EEC655 /* appicon.jpg */; };
+		23E492B41E9B5BBC00EEC655 /* appicon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492B31E9B5BBC00EEC655 /* appicon2.png */; };
 		FE96ABEF1C14D4C400257581 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
 		FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96ABF01C14D4C400257581 /* GameScene.sks */; };
 		FE96ABF31C14D4C400257581 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABF21C14D4C400257581 /* GameScene.swift */; };
@@ -96,6 +100,10 @@
 		23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walk 4 water (3).png"; sourceTree = "<group>"; };
 		23E492A91E9B3B8E00EEC655 /* buttonpresssound2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buttonpresssound2.wav; sourceTree = "<group>"; };
 		23E492AA1E9B3B8E00EEC655 /* gameoversoud2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameoversoud2.wav; sourceTree = "<group>"; };
+		23E492AD1E9B5A4F00EEC655 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		23E492AE1E9B5A4F00EEC655 /* plusOne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusOne.png; sourceTree = "<group>"; };
+		23E492B11E9B5A8C00EEC655 /* appicon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = appicon.jpg; sourceTree = "<group>"; };
+		23E492B31E9B5BBC00EEC655 /* appicon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appicon2.png; sourceTree = "<group>"; };
 		FE96ABEB1C14D4C400257581 /* Catch the Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE96ABEE1C14D4C400257581 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE96ABF01C14D4C400257581 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -180,7 +188,11 @@
 				23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
 				2316DFDB1DE8B99F004CEF57 /* bomb.png */,
+				23E492B31E9B5BBC00EEC655 /* appicon2.png */,
 				2316DFFB1E0B0F11004CEF57 /* wuterdrip4.png */,
+				23E492AD1E9B5A4F00EEC655 /* explosion.png */,
+				23E492AE1E9B5A4F00EEC655 /* plusOne.png */,
+				23E492B11E9B5A8C00EEC655 /* appicon.jpg */,
 				2316DFEF1DEA3E77004CEF57 /* ping.wav */,
 				2316DFE71DEA351B004CEF57 /* imageedit_3_9853634595.gif */,
 				2316DFE81DEA351B004CEF57 /* imageedit_5_9019544299.gif */,
@@ -333,19 +345,23 @@
 				2316DFFC1E0B0F11004CEF57 /* wuterdrip4.png in Resources */,
 				2316DFEE1DEA351B004CEF57 /* gameover1.jpg in Resources */,
 				23E492AB1E9B3B8E00EEC655 /* buttonpresssound2.wav in Resources */,
+				23E492B01E9B5A4F00EEC655 /* plusOne.png in Resources */,
 				23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */,
 				FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */,
 				2316DFD51DE4F0B9004CEF57 /* pause.jpe in Resources */,
 				2316DFEC1DEA351B004CEF57 /* imageedit_5_9019544299.gif in Resources */,
 				2316E0001E0B230E004CEF57 /* mute.png in Resources */,
 				23B48A511C95DAC000A1AD71 /* Rain-background.mp3 in Resources */,
+				23E492B41E9B5BBC00EEC655 /* appicon2.png in Resources */,
 				2316E0041E0C4E44004CEF57 /* wuterdrip6.png in Resources */,
 				2316DFE61DE8C1B9004CEF57 /* spark.png in Resources */,
 				23E492AC1E9B3B8E00EEC655 /* gameoversoud2.wav in Resources */,
 				FE96ABFD1C14D4C400257581 /* LaunchScreen.storyboard in Resources */,
 				2316E0021E0B32BB004CEF57 /* Ducky Duck.mp3 in Resources */,
+				23E492B21E9B5A8C00EEC655 /* appicon.jpg in Resources */,
 				2316DFDC1DE8B99F004CEF57 /* bomb.png in Resources */,
 				2316E0061E0C4E4B004CEF57 /* wuterdrip5.png in Resources */,
+				23E492AF1E9B5A4F00EEC655 /* explosion.png in Resources */,
 				2316DFDA1DE76833004CEF57 /* x2-logo.png in Resources */,
 				2316DFE51DE8C1B9004CEF57 /* explosion.sks in Resources */,
 				2316DFFE1E0B22F4004CEF57 /* unmute.png in Resources */,
