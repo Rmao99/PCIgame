@@ -38,6 +38,7 @@ class EndScene : SKScene //super class is SKScene
     var didMainRestart = false;
     
     var backgroundPlayer = AVAudioPlayer()
+    var click = AVAudioPlayer()
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -97,7 +98,7 @@ class EndScene : SKScene //super class is SKScene
         muted = mutedDefault.valueForKey("Mute") as! Bool
         
         
-        let backgroundSound = self.setupAudioPlayerWithFile("gameoversoud", type: "wav")
+        let backgroundSound = self.setupAudioPlayerWithFile("gameoversoud2", type: "wav")
         backgroundPlayer = backgroundSound
         if(muted == false)
         {
@@ -109,6 +110,11 @@ class EndScene : SKScene //super class is SKScene
         }
         backgroundPlayer.numberOfLoops = -1
         backgroundPlayer.play()
+        
+        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        click = clickSound
+        click.volume = 1.0
+
       
         unmuteBtn = UIButton(type: UIButtonType.Custom) as UIButton
         unmuteBtn.frame = CGRectMake(50,50,50,50)
@@ -224,6 +230,10 @@ class EndScene : SKScene //super class is SKScene
     }
     func linkBtnClicked()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
         
         linkBtn.backgroundColor = UIColor.lightGrayColor()
     }
@@ -244,6 +254,11 @@ class EndScene : SKScene //super class is SKScene
     }
     func restartButtonClicked()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
+        
         restartBtn.backgroundColor = UIColor.lightGrayColor()
     }
     func mainButtonNotClicked()
@@ -253,6 +268,10 @@ class EndScene : SKScene //super class is SKScene
     
     func mainButtonClicked()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
         mainMenuBtn.backgroundColor = UIColor.lightGrayColor()
     }
     
@@ -316,6 +335,7 @@ class EndScene : SKScene //super class is SKScene
     
     func unmuteClick()
     {
+        
         let mutedDefault = NSUserDefaults.standardUserDefaults()
         mutedDefault.setBool(true, forKey: "Mute")
         muted = true;

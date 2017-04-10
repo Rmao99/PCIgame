@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene : SKScene
 {
@@ -16,7 +17,43 @@ class GameScene : SKScene
     var registerBtn: UIButton!
     var donateBtn: UIButton!
     
+    var click = AVAudioPlayer()
+    
+    var muted = Bool()
+    
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
+        
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
+        let url = NSURL.fileURLWithPath(path!) //converts to url
+        
+        var audioPlayer:AVAudioPlayer? //optional AVAudioPlayer incase it isn't created
+        
+        do{
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        }
+        catch{
+            print("Player not available")
+        }
+        
+        return audioPlayer!
+    }
+    
     override func didMoveToView(view: SKView) {
+        
+        let mutedDefault = NSUserDefaults.standardUserDefaults()
+        
+        if(mutedDefault.valueForKey("Mute") == nil)
+        {
+            muted = false
+        }
+        else
+        {
+            muted = mutedDefault.valueForKey("Mute") as! Bool
+        }
+        
+        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        click = clickSound
+        click.volume = 1.0
         
         let viewSize:CGSize = view.bounds.size
         
@@ -140,6 +177,11 @@ class GameScene : SKScene
     }
     func hyper1Clicked()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
         linkBtn.backgroundColor = UIColor.lightGrayColor()
     }
     
@@ -159,6 +201,11 @@ class GameScene : SKScene
     
     func hyper2Clicked()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
         registerBtn.backgroundColor = UIColor.lightGrayColor()
     }
     
@@ -175,6 +222,11 @@ class GameScene : SKScene
     }
     func hyper3Clicked()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
         donateBtn.backgroundColor = UIColor.lightGrayColor()
     }
     
@@ -185,6 +237,11 @@ class GameScene : SKScene
     
     func playBtnClicked()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
         playBtnTest.backgroundColor = UIColor.lightGrayColor()
     }
     

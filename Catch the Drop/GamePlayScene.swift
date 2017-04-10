@@ -29,6 +29,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var soundPlayer = AVAudioPlayer()
     var backgroundPlayer = AVAudioPlayer()
     var splash = AVAudioPlayer()
+    var click = AVAudioPlayer()
     
     var MULTIPLIER = 1.0
     var scoreMultiplier = 1
@@ -206,8 +207,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         
         let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
         splash = splashSound;
+        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        click = clickSound
+        
+        
     
-               createPauseBtn()
+        createPauseBtn()
         
         self.scene?.backgroundColor = UIColor.darkGrayColor()
         //TODO: WHAT DO I DOOOOOO
@@ -627,6 +632,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
    
     func unmuteClick()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
+        
         var mutedDefault = NSUserDefaults.standardUserDefaults()
         mutedDefault.setBool(true, forKey: "Mute")
         muted = true;
@@ -638,6 +648,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func muteClick()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
         var mutedDefault = NSUserDefaults.standardUserDefaults()
         mutedDefault.setBool(false, forKey: "Mute")
         muted = false
@@ -648,6 +662,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     }
     func pauseClick()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
         print("pause click")
         pauseBtn.removeFromSuperview()
         createResumeBtn()
@@ -675,6 +694,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func resumeClick()
     {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
+        
         print("resume click")
         resumeBtn.removeFromSuperview()
         mainMenuBtn.removeFromSuperview()
@@ -722,6 +747,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     
     func mainButtonClicked()
     {
+        if(muted == false)
+        {
+            click.play()
+        }
         mainMenuBtn.backgroundColor = UIColor.lightGrayColor()
     }
     func MainMenuRestart()
