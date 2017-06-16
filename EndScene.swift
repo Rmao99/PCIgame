@@ -63,7 +63,7 @@ class EndScene : SKScene //super class is SKScene
         
         let viewSize:CGSize = view.bounds.size
         
-        let BackGround = SKSpriteNode(imageNamed: "gameover1.jpg")
+        let BackGround = SKSpriteNode(imageNamed: "gameover1")
         BackGround.position = CGPoint(x: viewSize.width/2, y: viewSize.height/2 + 70)
         BackGround.zPosition = 0
        // BackGround.xScale = 0.1
@@ -307,6 +307,14 @@ class EndScene : SKScene //super class is SKScene
             HighScoreLbl.removeFromSuperview()
             ScoreLbl.removeFromSuperview()
             mainMenuBtn.removeFromSuperview()
+            if(muted == false)
+            {
+                unmuteBtn.removeFromSuperview()
+            }
+            else
+            {
+                muteBtn.removeFromSuperview()
+            }
             didRestart = true;
         }
     }

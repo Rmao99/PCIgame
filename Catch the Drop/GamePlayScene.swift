@@ -25,6 +25,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode(imageNamed: "walk 4 water (3)")
     var score = 0
     var scoreLabel = UILabel()
+    var multiplierLbl = UILabel()
     
     var soundPlayer = AVAudioPlayer()
     var backgroundPlayer = AVAudioPlayer()
@@ -50,6 +51,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var unmuteBtn : UIButton!
     
     var numberLbl : UILabel!
+    
     var mainMenuBtn : UIButton!
     
     let gameLayer = SKNode()
@@ -91,6 +93,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self //CRUCIAL
         self.addChild(gameLayer)
         scoreLabel.text = "\(score)"
+        
         
         let viewSize:CGSize = view.bounds.size
         
@@ -156,7 +159,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         numberLbl.text = "Paused"
         numberLbl.font = numberLbl.font.fontWithSize(30)
         numberLbl.textColor = UIColor.whiteColor()
-        mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 120))
+        
+        
+        
+        mainMenuBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
         mainMenuBtn.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 2)
         mainMenuBtn.setTitle("Home", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         mainMenuBtn.backgroundColor = UIColor.clearColor()
@@ -223,12 +229,10 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         player.position = CGPointMake(self.size.width/2, self.size.height/15)
-        var point = CGPointMake(player.position.x, player.position.y)
-        var size = CGSize(width: 13, height: 10)
+
+        var physicsBodySize:CGSize = CGSize(width: 60.0, height : 10.0)
         
-        var physicsBodySize:CGSize = CGSize(width: 45.0, height : 5.0)
-        
-        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -13.0, y: 10.0))
+        player.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize, center: CGPoint(x : -14, y: 10.0))
         
         //player.physicsBody = SKPhysicsBody(rectangleOfSize: size)
         player.physicsBody?.affectedByGravity = false
@@ -405,8 +409,14 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.backgroundColor = UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 0.3)
         scoreLabel.textColor = UIColor.whiteColor()
         
-        self.view?.addSubview(scoreLabel)
+        multiplierLbl.text = "x\(scoreMultiplier)"
+        multiplierLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100,height: 20))
+        multiplierLbl.backgroundColor = UIColor(red: 0.1, green: 0.6, blue: 0.1, alpha: 0.3)
+        multiplierLbl.textColor = UIColor.whiteColor()
+        multiplierLbl.center = CGPoint(x: scoreLabel.center.x , y: scoreLabel.center.y+20)
         
+        self.view?.addSubview(scoreLabel)
+        self.view?.addSubview(multiplierLbl)
     }
     
     /////////////////////////////////////////////////////////////////////////
@@ -491,7 +501,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             {
                 score += 1*scoreMultiplier
             }
-            
+            multiplierLbl.text = "x\(scoreMultiplier)"
             scoreLabel.text = "\(score)"
             
             let i = dropArray.indexOf(firstBody.node as! SKSpriteNode)
@@ -526,11 +536,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             //self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()
+            multiplierLbl.removeFromSuperview()
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.player && secondBody.categoryBitMask == PhysicsCategory.x2)
         {
             secondBody.node?.removeFromParent()
             scoreMultiplier += 1
+            multiplierLbl.text = "x\(scoreMultiplier)"
             scoreLabel.text = "\(score)"
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.bottom && secondBody.categoryBitMask == PhysicsCategory.x2)
@@ -705,7 +717,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     {
         pauseBtn = UIButton(type: UIButtonType.Custom) as UIButton
         pauseBtn.frame = CGRectMake(50,50,50,50)
-        pauseBtn.setImage(UIImage(named: "pause.jpe") as UIImage?, forState: .Normal)
+        pauseBtn.setImage(UIImage(named: "pause.png") as UIImage?, forState: .Normal)
         pauseBtn.center = CGPoint(x: view!.frame.size.width - 100 , y: 25)
         //pauseBtn.setTitle("Pause", forState: UIControlState.Normal) //text says "Main Menu" when nothing is pressed
         //pauseBtn.backgroundColor = UIColor.clearColor()
@@ -760,6 +772,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.removeFromSuperview()
         muteBtn.removeFromSuperview()
         unmuteBtn.removeFromSuperview()
+        multiplierLbl.removeFromSuperview()
         
         self.view?.presentScene(nextScene, transition: SKTransition.crossFadeWithDuration(0.3))
         
