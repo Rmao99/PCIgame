@@ -9,14 +9,15 @@
 import UIKit
 import SpriteKit
 import AVFoundation
+import GameKit
 
-class GameViewController: UIViewController{
+class GameViewController: UIViewController, GKGameCenterControllerDelegate {
 
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
-        
+        authPlayer()
         let scene = GameScene(size: view.bounds.size)
             // Configure the view.
         
@@ -59,6 +60,29 @@ class GameViewController: UIViewController{
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func authPlayer(){
+        let localPlayer = GKLocalPlayer.localPlayer()
+        
+        localPlayer.authenticateHandler = {
+            (view, error) in
+            
+            if view != nil {
+                
+                self.presentViewController(view!, animated: true, completion: nil)
+                
+            }
+            else {
+            
+                print(GKLocalPlayer.localPlayer().authenticated)
+                
+            }
+        }
+    }
+    
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
