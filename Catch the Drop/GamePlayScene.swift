@@ -22,7 +22,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var highScore = Int()
     var muted = Bool()
     
-    var player = SKSpriteNode(imageNamed: "walk 4 water (3)")
+    var player = SKSpriteNode(imageNamed: "player")
     var score = 0
     var scoreLabel = UILabel()
     var multiplierLbl = UILabel()
@@ -70,6 +70,21 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var spawnEnlarge: SKAction!
     var sequenceEnlarge : SKAction!
     
+    func setupAudioPlayer(file:String, type:String) -> AVAudioPlayer
+    {
+         var audioPlayer:AVAudioPlayer?
+         if let asset = NSDataAsset(name: file){
+            do{
+                try audioPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: type)
+        
+            }
+            catch{
+                
+            }
+        }
+        
+        return audioPlayer!
+    }
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
@@ -184,7 +199,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
 //AUDIO
 /////////////////////////////////////////////////////////////////////////
 
-        let backgroundSound = self.setupAudioPlayerWithFile("Rain-background", type: "mp3")
+        let backgroundSound = self.setupAudioPlayer("rainBG", type: "mp3")
         soundPlayer = backgroundSound
         if(muted == false)
         {
@@ -197,11 +212,11 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         soundPlayer.numberOfLoops = -1
         soundPlayer.play()
         
-        let backgroundMusic = self.setupAudioPlayerWithFile("Ducky Duck", type: "mp3")
+        let backgroundMusic = self.setupAudioPlayer("duckysong", type: "mp3")
         backgroundPlayer = backgroundMusic
         if(muted == false)
         {
-            backgroundPlayer.volume = 0.3
+            backgroundPlayer.volume = 0.25
         }
         else
         {
@@ -211,11 +226,12 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         backgroundPlayer.play()
 
         
-        let splashSound = self.setupAudioPlayerWithFile("Water-splash-sound-effect", type: "mp3")
-        splash = splashSound;
-        splash.volume = 1.0
         
-        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        let splashSound = self.setupAudioPlayer("splash", type: "wav")
+        splash = splashSound
+      //  splash.volume = 1.0
+        
+        let clickSound = self.setupAudioPlayer("buttonpress", type: "wav")
         click = clickSound
         
         
@@ -226,6 +242,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         //TODO: WHAT DO I DOOOOOO
         self.scene?.size = CGSize(width: 640, height: 1136)
         
+        //let emitter - NSDataAsset(name: "RainParticles")
         self.addChild(SKEmitterNode(fileNamed: "RainParticle")!)
         
         player.position = CGPointMake(self.size.width/2, self.size.height/15)
@@ -424,6 +441,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     /////////////////////////////////////////////////////////////////////////
     
     func didBeginContact(contact: SKPhysicsContact) {
+      //  self.splash.
+        self.splash.stop()
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         
@@ -492,6 +511,13 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.player)
         {
+            
+            if(muted == false)
+            {
+                splash.play()
+            }
+            
+            
             if(firstBody.node?.name == "golden")
             {
                 score += 3*scoreMultiplier
@@ -512,6 +538,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         }
         else if(firstBody.categoryBitMask == PhysicsCategory.drop && secondBody.categoryBitMask == PhysicsCategory.bottom)
         {
+           
             updateScore();
             
             if(muted == false)
@@ -587,6 +614,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             secondBody.node?.removeFromParent()
         }
    
+        
     }
     
     
@@ -661,7 +689,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         mutedDefault.setBool(false, forKey: "Mute")
         muted = false
         soundPlayer.volume = 0.3
-        backgroundPlayer.volume = 0.3
+        backgroundPlayer.volume = 0.25
         muteBtn.removeFromSuperview()
         self.view?.addSubview(unmuteBtn)
     }
@@ -672,7 +700,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         {
             click.play()
         }
-        print("pause click")
+        
         pauseBtn.removeFromSuperview()
         createResumeBtn()
         self.view?.addSubview(numberLbl)

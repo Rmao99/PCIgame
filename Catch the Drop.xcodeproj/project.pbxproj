@@ -25,13 +25,15 @@
 		23B48A3F1C83736E00A1AD71 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B48A3E1C83736E00A1AD71 /* EndScene.swift */; };
 		23B48A461C837C4200A1AD71 /* RainParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A441C837C4200A1AD71 /* RainParticle.sks */; };
 		23B48A511C95DAC000A1AD71 /* Rain-background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */; };
-		23B48A551C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */; };
+		23B48A551C95EB4100A1AD71 /* splashh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A541C95EB4100A1AD71 /* splashh.mp3 */; };
 		23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */; };
 		23E492AB1E9B3B8E00EEC655 /* buttonpresssound2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492A91E9B3B8E00EEC655 /* buttonpresssound2.wav */; };
 		23E492AC1E9B3B8E00EEC655 /* gameoversoud2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AA1E9B3B8E00EEC655 /* gameoversoud2.wav */; };
 		23E492AF1E9B5A4F00EEC655 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AD1E9B5A4F00EEC655 /* explosion.png */; };
 		23E492B01E9B5A4F00EEC655 /* plusOne.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AE1E9B5A4F00EEC655 /* plusOne.png */; };
 		23E492B81E9C015700EEC655 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492B71E9C015700EEC655 /* pause.png */; };
+		23EB052C1EF661F300402EEB /* splash2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 23EB052B1EF661F300402EEB /* splash2.mov */; };
+		23EB052E1EF705FC00402EEB /* splash3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23EB052D1EF705FC00402EEB /* splash3.wav */; };
 		FE96ABEF1C14D4C400257581 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
 		FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FE96ABF01C14D4C400257581 /* GameScene.sks */; };
 		FE96ABF31C14D4C400257581 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABF21C14D4C400257581 /* GameScene.swift */; };
@@ -79,13 +81,15 @@
 		23B48A3E1C83736E00A1AD71 /* EndScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndScene.swift; path = ../EndScene.swift; sourceTree = "<group>"; };
 		23B48A441C837C4200A1AD71 /* RainParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainParticle.sks; sourceTree = "<group>"; };
 		23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rain-background.mp3"; sourceTree = "<group>"; };
-		23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Water-splash-sound-effect.mp3"; sourceTree = "<group>"; };
+		23B48A541C95EB4100A1AD71 /* splashh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = splashh.mp3; sourceTree = "<group>"; };
 		23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walk 4 water (3).png"; sourceTree = "<group>"; };
 		23E492A91E9B3B8E00EEC655 /* buttonpresssound2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buttonpresssound2.wav; sourceTree = "<group>"; };
 		23E492AA1E9B3B8E00EEC655 /* gameoversoud2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameoversoud2.wav; sourceTree = "<group>"; };
 		23E492AD1E9B5A4F00EEC655 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
 		23E492AE1E9B5A4F00EEC655 /* plusOne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusOne.png; sourceTree = "<group>"; };
 		23E492B71E9C015700EEC655 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		23EB052B1EF661F300402EEB /* splash2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = splash2.mov; sourceTree = "<group>"; };
+		23EB052D1EF705FC00402EEB /* splash3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splash3.wav; sourceTree = "<group>"; };
 		FE96ABEB1C14D4C400257581 /* Catch the Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE96ABEE1C14D4C400257581 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE96ABF01C14D4C400257581 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 				23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */,
 				FE96ABFB1C14D4C400257581 /* LaunchScreen.storyboard */,
 				23E492AD1E9B5A4F00EEC655 /* explosion.png */,
+				23EB052D1EF705FC00402EEB /* splash3.wav */,
 				23E492AE1E9B5A4F00EEC655 /* plusOne.png */,
 				2316DFEF1DEA3E77004CEF57 /* ping.wav */,
 				2316DFFF1E0B230E004CEF57 /* mute.png */,
@@ -179,7 +184,8 @@
 				233FA8C81CE8DC2300095FDA /* player_play (1).png */,
 				2316DFD71DE61C5B004CEF57 /* cartoonsky1.png */,
 				233FA8C61CE8DC1E00095FDA /* cartoon flower.png */,
-				23B48A541C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 */,
+				23B48A541C95EB4100A1AD71 /* splashh.mp3 */,
+				23EB052B1EF661F300402EEB /* splash2.mov */,
 				23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */,
 				2316E0011E0B32BB004CEF57 /* Ducky Duck.mp3 */,
 				FE96ABFE1C14D4C500257581 /* Info.plist */,
@@ -316,6 +322,7 @@
 				238C1DAD1C4C373800019101 /* wuterdrip.png in Resources */,
 				23E492AB1E9B3B8E00EEC655 /* buttonpresssound2.wav in Resources */,
 				23E492B01E9B5A4F00EEC655 /* plusOne.png in Resources */,
+				23EB052E1EF705FC00402EEB /* splash3.wav in Resources */,
 				23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */,
 				FE96ABF11C14D4C400257581 /* GameScene.sks in Resources */,
 				2316E0001E0B230E004CEF57 /* mute.png in Resources */,
@@ -332,8 +339,9 @@
 				FE96ABFA1C14D4C400257581 /* Assets.xcassets in Resources */,
 				233FA8C91CE8DC2300095FDA /* player_play (1).png in Resources */,
 				2316DFF01DEA3E77004CEF57 /* ping.wav in Resources */,
-				23B48A551C95EB4100A1AD71 /* Water-splash-sound-effect.mp3 in Resources */,
+				23B48A551C95EB4100A1AD71 /* splashh.mp3 in Resources */,
 				23E492B81E9C015700EEC655 /* pause.png in Resources */,
+				23EB052C1EF661F300402EEB /* splash2.mov in Resources */,
 				233FA8C71CE8DC1E00095FDA /* cartoon flower.png in Resources */,
 				23B48A461C837C4200A1AD71 /* RainParticle.sks in Resources */,
 				FE96ABF81C14D4C400257581 /* Main.storyboard in Resources */,
