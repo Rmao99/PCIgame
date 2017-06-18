@@ -22,7 +22,22 @@ class GameScene : SKScene
     var muteBtn : UIButton!
     var unmuteBtn : UIButton!
     var muted = Bool()
-    
+    func setupAudioPlayer(file:String, type:String) -> AVAudioPlayer
+    {
+        var audioPlayer:AVAudioPlayer?
+        if let asset = NSDataAsset(name: file){
+            do{
+                try audioPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: type)
+                
+            }
+            catch{
+                
+            }
+        }
+        
+        return audioPlayer!
+    }
+
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
@@ -79,7 +94,7 @@ class GameScene : SKScene
             self.view?.addSubview(muteBtn);
         }
         
-        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        let clickSound = self.setupAudioPlayer("buttonpress", type: "wav")
         click = clickSound
         click.volume = 1.0
         

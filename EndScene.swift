@@ -41,6 +41,23 @@ class EndScene : SKScene //super class is SKScene
     var backgroundPlayer = AVAudioPlayer()
     var click = AVAudioPlayer()
     
+    func setupAudioPlayer(file:String, type:String) -> AVAudioPlayer
+    {
+        var audioPlayer:AVAudioPlayer?
+        if let asset = NSDataAsset(name: file){
+            do{
+                try audioPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: type)
+                
+            }
+            catch{
+                
+            }
+        }
+        
+        return audioPlayer!
+    }
+
+    
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer{
         
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String) //needs to find where the soundfile is
@@ -99,7 +116,7 @@ class EndScene : SKScene //super class is SKScene
         muted = mutedDefault.valueForKey("Mute") as! Bool
         
         
-        let backgroundSound = self.setupAudioPlayerWithFile("gameoversoud2", type: "wav")
+        let backgroundSound = self.setupAudioPlayer("gameoversound", type: "wav")
         backgroundPlayer = backgroundSound
         if(muted == false)
         {
@@ -112,7 +129,7 @@ class EndScene : SKScene //super class is SKScene
         backgroundPlayer.numberOfLoops = -1
         backgroundPlayer.play()
         
-        let clickSound = self.setupAudioPlayerWithFile("buttonpresssound2", type: "wav")
+        let clickSound = self.setupAudioPlayer("buttonpress", type: "wav")
         click = clickSound
         click.volume = 1.0
 
