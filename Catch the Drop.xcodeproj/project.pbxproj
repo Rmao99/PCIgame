@@ -27,6 +27,8 @@
 		23B48A511C95DAC000A1AD71 /* Rain-background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A501C95DAC000A1AD71 /* Rain-background.mp3 */; };
 		23B48A551C95EB4100A1AD71 /* splashh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A541C95EB4100A1AD71 /* splashh.mp3 */; };
 		23B48A611C967A4C00A1AD71 /* walk 4 water (3).png in Resources */ = {isa = PBXBuildFile; fileRef = 23B48A601C967A4C00A1AD71 /* walk 4 water (3).png */; };
+		23DD40571F3E94E4008A1809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
+		23DD40581F3E94E6008A1809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE96ABEE1C14D4C400257581 /* AppDelegate.swift */; };
 		23E492AB1E9B3B8E00EEC655 /* buttonpresssound2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492A91E9B3B8E00EEC655 /* buttonpresssound2.wav */; };
 		23E492AC1E9B3B8E00EEC655 /* gameoversoud2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AA1E9B3B8E00EEC655 /* gameoversoud2.wav */; };
 		23E492AF1E9B5A4F00EEC655 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = 23E492AD1E9B5A4F00EEC655 /* explosion.png */; };
@@ -280,6 +282,7 @@
 				TargetAttributes = {
 					FE96ABEA1C14D4C300257581 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = X6QNZ34X5Z;
 					};
 					FE96AC021C14D4C500257581 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -381,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23DD40571F3E94E4008A1809 /* AppDelegate.swift in Sources */,
 				FE96AC081C14D4C500257581 /* Catch_the_DropTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23DD40581F3E94E6008A1809 /* AppDelegate.swift in Sources */,
 				FE96AC131C14D4C500257581 /* Catch_the_DropUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,10 +519,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Catch the Drop/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.projectconcerninternational.Catch-the-Drop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -526,10 +534,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Catch the Drop/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.projectconcerninternational.Catch-the-Drop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

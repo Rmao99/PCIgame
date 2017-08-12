@@ -8,10 +8,13 @@
 
 import SpriteKit
 import AVFoundation
+import SafariServices
+import UIKit
 
-class GameScene : SKScene
+class GameScene : SKScene,SFSafariViewControllerDelegate
 {
  //   var playBtn: SKNode! = nil
+    
     var playBtnTest : UIButton!
     var linkBtn: UIButton!
     var registerBtn: UIButton!
@@ -213,12 +216,12 @@ class GameScene : SKScene
     
     func hyperlink1()
     {
-        let url = NSURL(string: "https://www.pciglobal.org/w4w2017/")
-        // register: let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
-        //donate now
-        //let url = NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")
+        let svc = SFSafariViewController(URL: NSURL(string: "https://www.pciglobal.org/w4w2017/")!)
+        svc.delegate=self
         
-        UIApplication.sharedApplication().openURL(url!)
+        var vc: UIViewController = UIViewController()
+        vc = self.view!.window!.rootViewController!
+        vc.presentViewController(svc,animated:true,completion:nil)
     }
     func hyper1Clicked()
     {
@@ -237,11 +240,19 @@ class GameScene : SKScene
     
     func hyperlink2()
     {
-        let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
+        //let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
+        
+        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")!)
+        svc.delegate=self
+        
+        var vc: UIViewController = UIViewController()
+        vc = self.view!.window!.rootViewController!
+        vc.presentViewController(svc,animated:true,completion:nil)
+       
         //donate now
         //let url = NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")
         
-        UIApplication.sharedApplication().openURL(url!)
+        //UIApplication.sharedApplication().openURL(url!)
     }
     
     func hyper2Clicked()
@@ -261,9 +272,13 @@ class GameScene : SKScene
     
     func hyperlink3()
     {
-        let url = NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")
+        let svc = SFSafariViewController(URL:  NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")!)
+        svc.delegate=self
         
-        UIApplication.sharedApplication().openURL(url!)
+        var vc: UIViewController = UIViewController()
+        vc = self.view!.window!.rootViewController!
+        vc.presentViewController(svc,animated:true,completion:nil)
+
     }
     func hyper3Clicked()
     {
@@ -279,6 +294,14 @@ class GameScene : SKScene
     {
         donateBtn.backgroundColor = UIColor.clearColor()
     }
+    
+    
+    func safariViewControllerDidFinish(controller: SFSafariViewController)
+    {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     
     func playBtnClicked()
     {

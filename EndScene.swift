@@ -113,8 +113,15 @@ class EndScene : SKScene //super class is SKScene
         })
         
         let mutedDefault = NSUserDefaults.standardUserDefaults()
-        muted = mutedDefault.valueForKey("Mute") as! Bool
         
+        if(mutedDefault.valueForKey("Mute") == nil)
+        {
+            muted = false
+        }
+        else
+        {
+            muted = mutedDefault.valueForKey("Mute") as! Bool
+        }
         
         let backgroundSound = self.setupAudioPlayer("gameoversound", type: "wav")
         backgroundPlayer = backgroundSound
