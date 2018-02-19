@@ -246,7 +246,7 @@ class EndScene : SKScene //super class is SKScene
     
     func hyperlink()
     {
-        let url = NSURL(string: "https://www.pciglobal.org/w4w2017/")
+        let url = NSURL(string: "https://www.pciglobal.org/w4w2018/")
         // register: let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
         //donate now
         //let url = NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")
@@ -311,8 +311,8 @@ class EndScene : SKScene //super class is SKScene
             let skView = self.view! as SKView
             
             
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+            //skView.showsFPS = true
+            //skView.showsNodeCount = true
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = false

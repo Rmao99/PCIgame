@@ -42,6 +42,8 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
     var isGolden = false
     // var DropTimer = NSTimer()
     
+    var gameOver = false
+    
     var dropArray = [SKSpriteNode]()
     
     var pauseBtn : UIButton!
@@ -172,7 +174,7 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
         numberLbl = UILabel(frame: CGRect(x: 0, y:0, width: view.frame.size.width / 4, height: 30))
         numberLbl.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.width / 2)
         numberLbl.text = "Paused"
-        numberLbl.font = numberLbl.font.fontWithSize(30)
+        numberLbl.font = numberLbl.font.fontWithSize(24)
         numberLbl.textColor = UIColor.whiteColor()
         
         
@@ -555,11 +557,35 @@ class GamePlayScene: SKScene, SKPhysicsContactDelegate {
             muteBtn.removeFromSuperview()
             unmuteBtn.removeFromSuperview()
             
+            gameOver = true
+           /*test
+            let scene = EndScene(size: view!.bounds.size)
+            
+            // Configure the view.
+            
+            let skView = self.view! as SKView
+            
+            
+            //skView.showsFPS = true
+            //skView.showsNodeCount = true
+            //        skView.showsPhysics = true
+            /* Sprite Kit applies additional optimizations to improve rendering performance */
+            skView.ignoresSiblingOrder = false
+            
+            /* Set the scale mode to scale to fit the window */
+            scene.scaleMode = .ResizeFill
+            
+            scene.size = skView.bounds.size
+            skView.presentScene(scene)
+            //self.view?.presentScene(scene)
+            
+            */
+        
             let nextScene = EndScene(size: self.scene!.size)
             nextScene.scaleMode = SKSceneScaleMode.ResizeFill
             
             self.view?.presentScene(nextScene) //transition: SKTransition.
-                
+            
             //self.view?.presentScene(EndScene())
             
             scoreLabel.removeFromSuperview()

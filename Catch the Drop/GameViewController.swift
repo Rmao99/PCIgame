@@ -25,14 +25,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             let skView = self.view as! SKView
         
         
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+            //skView.showsFPS = true
+            //skView.showsNodeCount = true
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = false
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .ResizeFill
+            scene.scaleMode = SKSceneScaleMode.ResizeFill
             
             scene.size = skView.bounds.size
             skView.presentScene(scene)

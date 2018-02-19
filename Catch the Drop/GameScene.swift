@@ -216,7 +216,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     
     func hyperlink1()
     {
-        let svc = SFSafariViewController(URL: NSURL(string: "https://www.pciglobal.org/w4w2017/")!)
+        let svc = SFSafariViewController(URL: NSURL(string: "https://www.pciglobal.org/w4w2018/")!)
         svc.delegate=self
         
         var vc: UIViewController = UIViewController()
@@ -340,8 +340,8 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
         let skView = self.view! as SKView
         
         
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        //skView.showsFPS = true
+        //skView.showsNodeCount = true
 //        skView.showsPhysics = true
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = false
