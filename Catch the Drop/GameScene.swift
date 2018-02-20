@@ -242,7 +242,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     {
         //let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
         
-        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")!)
+        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/event/10th-anniversary-walk-for-water/e164980")!)
         svc.delegate=self
         
         var vc: UIViewController = UIViewController()
@@ -272,7 +272,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     
     func hyperlink3()
     {
-        let svc = SFSafariViewController(URL:  NSURL(string: "https://my.pciglobal.org/checkout/donation?eid=69752")!)
+        let svc = SFSafariViewController(URL:  NSURL(string: "https://my.pciglobal.org/give/164980/#!/donation/checkout")!)
         svc.delegate=self
         
         var vc: UIViewController = UIViewController()
