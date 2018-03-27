@@ -19,6 +19,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     var linkBtn: UIButton!
     var registerBtn: UIButton!
     var donateBtn: UIButton!
+    var fundraiseBtn: UIButton!
     
     var click = AVAudioPlayer()
     
@@ -138,7 +139,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
         view.addSubview(playBtnTest)
                 
         linkBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
-        linkBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 200)
+        linkBtn.center = CGPoint(x : view.frame.size.width / 2 - 75, y: view.frame.size.width / 2 + 175)
         linkBtn.backgroundColor = UIColor.clearColor()
         linkBtn.setTitle("About us", forState: UIControlState.Normal)
         linkBtn.layer.cornerRadius = 10
@@ -161,7 +162,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
         })
         
         registerBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
-        registerBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2 + 300)
+        registerBtn.center = CGPoint(x : view.frame.size.width / 2 + 75, y: view.frame.size.width / 2 + 175)
         registerBtn.backgroundColor = UIColor.clearColor()
         registerBtn.setTitle("Register", forState: UIControlState.Normal)
         registerBtn.layer.cornerRadius = 10
@@ -184,7 +185,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
         })
       
         donateBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
-        donateBtn.center = CGPoint(x : view.frame.size.width / 2, y: view.frame.size.width / 2+400)
+        donateBtn.center = CGPoint(x : view.frame.size.width / 2 - 75, y: view.frame.size.width / 2+300)
         donateBtn.backgroundColor = UIColor.clearColor()
         donateBtn.layer.cornerRadius = 10
         donateBtn.layer.borderWidth = 1
@@ -209,13 +210,38 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
                 
         })
         
+        fundraiseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.size.width / 3, height: 60))
+        fundraiseBtn.center = CGPoint(x : view.frame.size.width / 2 + 75, y: view.frame.size.width / 2+300)
+        fundraiseBtn.backgroundColor = UIColor.clearColor()
+        fundraiseBtn.layer.cornerRadius = 10
+        fundraiseBtn.layer.borderWidth = 1
+        fundraiseBtn.layer.borderColor = UIColor.clearColor().CGColor
+        fundraiseBtn.setTitle("Fundraise", forState: UIControlState.Normal)
+        fundraiseBtn.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        //donateBtn.font = UIFont(name: "ChalkDuster", size: 20)!
+        fundraiseBtn.layer.borderColor = UIColor.blackColor().CGColor
+        fundraiseBtn.addTarget(self, action: Selector("hyperlink4"), forControlEvents: UIControlEvents.TouchUpInside)
+        fundraiseBtn.addTarget(self, action: Selector("hyper4Clicked"), forControlEvents: UIControlEvents.TouchDown)
+        fundraiseBtn.addTarget(self, action: Selector("hyper4NotClicked"), forControlEvents: UIControlEvents.TouchDragExit)
+        self.view?.addSubview(fundraiseBtn)
+        
+        UIView.animateWithDuration(0.9 ,
+            animations: {
+                self.fundraiseBtn.transform = CGAffineTransformMakeScale(0.6,0.6)
+            },
+            completion:{ finish in
+                UIView.animateWithDuration(0.6){
+                    self.fundraiseBtn.transform = CGAffineTransformIdentity
+                }
+        })
+        
         self.addChild(myLabel)
         self.addChild(BG)
         //self.addChild(playBtn)
     }
     
     func hyperlink1()
-    {
+    {   //about us
         let svc = SFSafariViewController(URL: NSURL(string: "https://www.pciglobal.org/w4w2018/")!)
         svc.delegate=self
         
@@ -240,9 +266,9 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     
     func hyperlink2()
     {
-        //let url = NSURL(string: "https://my.pciglobal.org/san-diego/events/2016-walk-for-water-registration/e69752")
+        //register
         
-        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/event/10th-anniversary-walk-for-water/e164980")!)
+        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/san-diego/events/2018-walk-for-water-registration/e169285")!)
         svc.delegate=self
         
         var vc: UIViewController = UIViewController()
@@ -272,7 +298,8 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     
     func hyperlink3()
     {
-        let svc = SFSafariViewController(URL:  NSURL(string: "https://my.pciglobal.org/give/164980/#!/donation/checkout")!)
+        //donate
+        let svc = SFSafariViewController(URL:  NSURL(string: "https://my.pciglobal.org/give/147146/#!/donation/checkout")!)
         svc.delegate=self
         
         var vc: UIViewController = UIViewController()
@@ -293,6 +320,32 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
     func hyper3NotClicked()
     {
         donateBtn.backgroundColor = UIColor.clearColor()
+    }
+    
+    func hyperlink4()
+    {
+        //fundraise
+        let svc = SFSafariViewController(URL: NSURL(string: "https://my.pciglobal.org/campaign/2018-walk-for-water/c147146")!)
+        svc.delegate=self
+        
+        var vc: UIViewController = UIViewController()
+        vc = self.view!.window!.rootViewController!
+        vc.presentViewController(svc,animated:true,completion:nil)
+    }
+    
+    func hyper4Clicked()
+    {
+        
+        if(muted == false)
+        {
+            click.play()
+        }
+        fundraiseBtn.backgroundColor = UIColor.lightGrayColor()
+    }
+    
+    func hyper4NotClicked()
+    {
+        fundraiseBtn.backgroundColor = UIColor.clearColor()
     }
     
     
@@ -323,6 +376,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
         donateBtn.removeFromSuperview()
         linkBtn.removeFromSuperview()
         registerBtn.removeFromSuperview()
+        fundraiseBtn.removeFromSuperview()
         playBtnTest.removeFromSuperview()
         if(muted == false)
         {
@@ -384,6 +438,7 @@ class GameScene : SKScene,SFSafariViewControllerDelegate
                 donateBtn.removeFromSuperview()
                 linkBtn.removeFromSuperview()
                 registerBtn.removeFromSuperview()
+                fundraiseBtn.removeFromSuperview()
                 
                 let scene = GamePlayScene(size: view!.bounds.size)
                 
